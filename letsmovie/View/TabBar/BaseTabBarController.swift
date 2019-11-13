@@ -22,6 +22,7 @@ class BaseTabBarController: UITabBarController {
     
     private func setupView() {
         view.backgroundColor = .clear
+        tabBar.tintColor = .darkGray
     }
     
     private func setupTabBarItems() {
@@ -34,9 +35,10 @@ class BaseTabBarController: UITabBarController {
         let meController = MeController()
         meController.tabBarItem.image = UIImage(named: "user")
         meController.tabBarItem.title = ""
+        let meNavController = UINavigationController(rootViewController: meController)
         
         viewControllers = [
-            discoverController, meController
+            discoverController, meNavController
         ]
     }
     
