@@ -9,11 +9,15 @@
 import UIKit
 
 class BaseTabBarController: UITabBarController {
+    
+    let tabBarItemPadding: UIEdgeInsets = .init(top: 10, left: 0, bottom: -10, right: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
         setupTabBarItems()
+        setInsetsTabBarItemsImage(with: tabBarItemPadding)
     }
     
     private func setupView() {
@@ -23,14 +27,23 @@ class BaseTabBarController: UITabBarController {
     private func setupTabBarItems() {
         //MARK: DiscoverController
         let discoverController = DiscoverController()
-        discoverController.tabBarItem.title = "Discover"
+        discoverController.tabBarItem.image = UIImage(named: "eye")
+        discoverController.tabBarItem.title = ""
 
         //MARK: MeController
         let meController = MeController()
-        meController.tabBarItem.title = "Me"
+        meController.tabBarItem.image = UIImage(named: "user")
+        meController.tabBarItem.title = ""
         
         viewControllers = [
             discoverController, meController
         ]
+    }
+    
+    private func setInsetsTabBarItemsImage(with padding: UIEdgeInsets) {
+        
+        viewControllers?.forEach {
+            $0.tabBarItem.imageInsets = padding
+        }
     }
 }
