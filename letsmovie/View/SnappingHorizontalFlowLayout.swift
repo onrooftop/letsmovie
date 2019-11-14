@@ -18,7 +18,6 @@ class SnappingHorizontalFlowLayout: UICollectionViewFlowLayout {
         let horizontalWithOffset = proposedContentOffset.x + collectionView.contentInset.left
         let targetRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.frame.width, height: collectionView.frame.height)
         let layoutAttributes = super.layoutAttributesForElements(in: targetRect)
-        print(horizontalWithOffset)
         layoutAttributes?.forEach {
             let rectOffsetX = $0.frame.origin.x
             if abs(horizontalWithOffset - rectOffsetX) < abs(minDistance) {
