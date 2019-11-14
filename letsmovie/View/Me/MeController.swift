@@ -123,7 +123,7 @@ extension MeController {
         lineIndicatorViewLeadingConstaint.isActive = true
         lineIndicatorView.widthAnchor.constraint(equalToConstant: view.frame.width / 2).isActive = true
         lineIndicatorView.heightAnchor.constraint(equalToConstant: 5).isActive = true
-        lineIndicatorView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: -5).isActive = true
+        lineIndicatorView.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: -10).isActive = true
 
     }
     
@@ -133,7 +133,7 @@ extension MeController {
 extension MeController: UICollectionViewDelegateFlowLayout {
     
     private func setupCollectionViewController() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .init(top: horizontalStackViewHeight, left: 0, bottom: 0, right: 0)
@@ -145,14 +145,15 @@ extension MeController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        switch pages[indexPath.item] {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PageCell
+        let page = pages[indexPath.item]
+        
+        switch page {
         case .watchlist:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            cell.backgroundColor = .red
+            
             return cell
         case .watched:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            cell.backgroundColor = .blue
+            
             return cell
         }
     }

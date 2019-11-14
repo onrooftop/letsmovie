@@ -17,6 +17,9 @@
 		AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */; };
 		AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5510237C129200E1B957 /* DiscoverController.swift */; };
 		AEBB5513237C12B300E1B957 /* MeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5512237C12B200E1B957 /* MeController.swift */; };
+		AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5515237D5AD900E1B957 /* PageCell.swift */; };
+		AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5519237D6AA800E1B957 /* PosterController.swift */; };
+		AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551B237D6EA300E1B957 /* PosterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		AEBB5510237C129200E1B957 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
 		AEBB5512237C12B200E1B957 /* MeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
+		AEBB5515237D5AD900E1B957 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
+		AEBB5519237D6AA800E1B957 /* PosterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterController.swift; sourceTree = "<group>"; };
+		AEBB551B237D6EA300E1B957 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,9 +173,20 @@
 		AEBB550F237C128200E1B957 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				AEBB5514237D5AC400E1B957 /* Page */,
 				AEBB5512237C12B200E1B957 /* MeController.swift */,
 			);
 			path = Me;
+			sourceTree = "<group>";
+		};
+		AEBB5514237D5AC400E1B957 /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				AEBB5515237D5AD900E1B957 /* PageCell.swift */,
+				AEBB5519237D6AA800E1B957 /* PosterController.swift */,
+				AEBB551B237D6EA300E1B957 /* PosterCell.swift */,
+			);
+			path = Page;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +292,10 @@
 			files = (
 				AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */,
 				AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */,
+				AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */,
+				AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */,
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
+				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,
 				AE02AA4323798E8000185B47 /* SceneDelegate.swift in Sources */,
