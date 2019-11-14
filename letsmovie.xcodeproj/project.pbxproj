@@ -20,6 +20,9 @@
 		AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5515237D5AD900E1B957 /* PageCell.swift */; };
 		AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5519237D6AA800E1B957 /* PosterController.swift */; };
 		AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551B237D6EA300E1B957 /* PosterCell.swift */; };
+		AEBB551E237D79EC00E1B957 /* DiscoverHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */; };
+		AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */; };
+		AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		AEBB5515237D5AD900E1B957 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		AEBB5519237D6AA800E1B957 /* PosterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterController.swift; sourceTree = "<group>"; };
 		AEBB551B237D6EA300E1B957 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
+		AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverHeader.swift; sourceTree = "<group>"; };
+		AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCell.swift; sourceTree = "<group>"; };
+		AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +172,9 @@
 			isa = PBXGroup;
 			children = (
 				AEBB5510237C129200E1B957 /* DiscoverController.swift */,
+				AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */,
+				AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */,
+				AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -291,12 +300,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */,
+				AEBB551E237D79EC00E1B957 /* DiscoverHeader.swift in Sources */,
+				AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */,
 				AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */,
 				AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */,
 				AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */,
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
+				AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,
 				AE02AA4323798E8000185B47 /* SceneDelegate.swift in Sources */,
 			);

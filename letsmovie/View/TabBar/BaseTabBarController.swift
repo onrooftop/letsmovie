@@ -30,7 +30,8 @@ class BaseTabBarController: UITabBarController {
         let discoverController = DiscoverController()
         discoverController.tabBarItem.image = UIImage(named: "eye")
         discoverController.tabBarItem.title = ""
-
+        let discoverNavController = UINavigationController(rootViewController: discoverController)
+        
         //MARK: MeController
         let meController = MeController()
         meController.tabBarItem.image = UIImage(named: "user")
@@ -38,7 +39,7 @@ class BaseTabBarController: UITabBarController {
         let meNavController = UINavigationController(rootViewController: meController)
         
         viewControllers = [
-            discoverController, meNavController
+            discoverNavController, meNavController
         ]
     }
     
