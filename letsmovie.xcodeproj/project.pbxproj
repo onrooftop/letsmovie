@@ -23,6 +23,7 @@
 		AEBB551E237D79EC00E1B957 /* DiscoverHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */; };
 		AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */; };
 		AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */; };
+		AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5525237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverHeader.swift; sourceTree = "<group>"; };
 		AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCell.swift; sourceTree = "<group>"; };
 		AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosterController.swift; sourceTree = "<group>"; };
+		AEBB5525237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingHorizontalFlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				AEBB550E237C127700E1B957 /* Discover */,
 				AEBB550B237C119E00E1B957 /* TabBar */,
 				AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */,
+				AEBB5525237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
+				AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */,
 				AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,
 				AE02AA4323798E8000185B47 /* SceneDelegate.swift in Sources */,

@@ -13,9 +13,10 @@ class DiscoverPosterController: UICollectionViewController {
     private let cellId = "cellId"
     
     init() {
-        let layout = UICollectionViewFlowLayout()
+        let layout = SnappingHorizontalFlowLayout()
         super.init(collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
+        collectionView.decelerationRate = .fast
     }
     
     required init?(coder: NSCoder) {
@@ -41,7 +42,7 @@ extension DiscoverPosterController {
 extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        collectionView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 100)
         collectionView.showsHorizontalScrollIndicator = false
     }
     
