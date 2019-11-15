@@ -1,0 +1,6 @@
+framework module Pods_letsmovie {
+  umbrella header "Pods-letsmovie-umbrella.h"
+
+  export *
+  module * { export * }
+}
