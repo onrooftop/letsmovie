@@ -70,3 +70,6 @@ fastlane/test_output
 
 # Gregor Cresnar's icons
 letsmovie/Assets.xcassets/GregorCresnar
+
+# API KEY
+letsmovie/Constants
