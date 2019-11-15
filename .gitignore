@@ -72,4 +72,4 @@ fastlane/test_output
 letsmovie/Assets.xcassets/GregorCresnar
 
 # API KEY
-letsmovie/Constants/
+letsmovie/Constants/*.swift
