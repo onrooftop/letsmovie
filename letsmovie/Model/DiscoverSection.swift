@@ -9,8 +9,8 @@
 import Foundation
 import RxDataSources
 
-enum DiscoverType {
-    case popular, nowPlaying, upComing
+enum DiscoverType: String {
+    case popular = "Popular", nowPlaying = "Now Playing", upComing = "Up Coming"
 }
 
 struct DiscoverSection {

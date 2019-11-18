@@ -11,11 +11,12 @@ import RxSwift
 
 class DiscoverPosterViewModel {
     //MARK: Input
-    let discoverType: PublishSubject<DiscoverType>
+    let discoverType: DiscoverType
     let loadMoreData: PublishSubject<Void>
     
     //MARK: Output
     let posters: BehaviorSubject<[DiscoverResult]>
+    let title: Observable<String>
     
     private let pageNumber: BehaviorSubject<Int>
     private let disposeBag = DisposeBag()
@@ -24,18 +25,18 @@ class DiscoverPosterViewModel {
     private var discoverResults: [DiscoverResult] = []
     private var currentPage = 0
     
-    init(networkSession: NetworkSession) {
+    init(networkSession: NetworkSession, discoverType: DiscoverType) {
         self.service = networkSession
         
-        discoverType = PublishSubject<DiscoverType>()
+        self.discoverType = discoverType
         loadMoreData = PublishSubject<Void>()
+        self.title = Observable.just(discoverType.rawValue)
         
         posters = BehaviorSubject(value: [])
         pageNumber = BehaviorSubject(value: 1)
         
-        Observable.combineLatest(discoverType.asObserver(), pageNumber.asObserver())
-            .asObservable()
-            .flatMap { self.service.request(discoverType: $0, page: $1) }
+        pageNumber.asObserver()
+            .flatMap { self.service.request(discoverType: self.discoverType, page: $0) }
             .map{ try! JSONDecoder().decode(DiscoverPoster.self, from: $0) }
             .subscribe(onNext: { [unowned self] (discoverPoster) in
                 self.discoverPosters.append(discoverPoster)

@@ -10,11 +10,12 @@ import UIKit
 import RxDataSources
 import RxCocoa
 import RxSwift
+import Action
 
 class DiscoverController: UICollectionViewController, ViewModelBindableType {
 
-    private static let cellId = "cellId"
-    private static let headerId = "headerId"
+    private let cellId = "cellId"
+    private let headerId = "headerId"
     
     private let disposeBag = DisposeBag()
     
@@ -44,7 +45,7 @@ class DiscoverController: UICollectionViewController, ViewModelBindableType {
         collectionView.dataSource = nil
         collectionView.delegate = nil
         
-        dataSource = DiscoverController.dataSource()
+        dataSource = createDataSource()
 
         viewModel.discoverSections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
@@ -52,6 +53,14 @@ class DiscoverController: UICollectionViewController, ViewModelBindableType {
         
         collectionView.rx
             .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        viewModel.seeAllViewModel
+            .subscribe(onNext: { (viewModel) in
+                var vc = DiscoverSeeAllController()
+                vc.bind(viewModel: viewModel)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
             .disposed(by: disposeBag)
     }
 }
@@ -73,17 +82,18 @@ extension DiscoverController {
 //MARK:- RxDatasources
 
 extension DiscoverController {
-    static func dataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverSection> {
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverSection> {
         let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! DiscoverCell
             cell.discoverType = item
             return cell
         })
-
+        
         dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.headerId, for: indexPath) as! DiscoverHeader
             let headerTitle = dataSource.sectionModels[indexPath.section].header
             header.titleLabel.text = headerTitle
+            header.seeAllButton.rx.action = self.viewModel.performSeeAll(section: indexPath.section)
             return header
         }
         
@@ -94,8 +104,8 @@ extension DiscoverController {
 //MARK:- CollectionView Delegate and Datasource
 extension DiscoverController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
-        collectionView.register(DiscoverCell.self, forCellWithReuseIdentifier: DiscoverController.cellId)
-        collectionView.register(DiscoverHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DiscoverController.headerId)
+        collectionView.register(DiscoverCell.self, forCellWithReuseIdentifier: self.cellId)
+        collectionView.register(DiscoverHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: self.headerId)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

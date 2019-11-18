@@ -13,9 +13,9 @@ class DiscoverCell: UICollectionViewCell {
     var discoverPosterController = DiscoverPosterController()
     var discoverType: DiscoverType! {
         didSet {
-            let discoverPosterViewModel = DiscoverPosterViewModel(networkSession: ApiManager.shared)
+            let discoverPosterViewModel = DiscoverPosterViewModel(networkSession: ApiManager.shared, discoverType: discoverType)
             discoverPosterController.bind(viewModel: discoverPosterViewModel)
-            discoverPosterViewModel.discoverType.onNext(discoverType)
+
         }
     }
     

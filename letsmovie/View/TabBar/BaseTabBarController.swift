@@ -30,9 +30,9 @@ class BaseTabBarController: UITabBarController {
         var discoverController = DiscoverController()
         discoverController.tabBarItem.image = UIImage(named: "eye")
         discoverController.tabBarItem.title = ""
-        let discoverNavController = UINavigationController(rootViewController: discoverController)
+        let discoverNavController = BackEnabledNavigationController(rootViewController: discoverController)
         
-        let discoverViewModel = DiscoverViewModel()
+        let discoverViewModel = DiscoverViewModel(service: ApiManager.shared)
         discoverController.bind(viewModel: discoverViewModel)
         
         //MARK: MeController

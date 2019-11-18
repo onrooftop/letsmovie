@@ -18,8 +18,6 @@ class DiscoverPosterController: UICollectionViewController, ViewModelBindableTyp
     private let disposeBag = DisposeBag()
     var viewModel: DiscoverPosterViewModel!
     
-//    var dataSource
-    
     init() {
         let layout = SnappingHorizontalFlowLayout()
         super.init(collectionViewLayout: layout)
