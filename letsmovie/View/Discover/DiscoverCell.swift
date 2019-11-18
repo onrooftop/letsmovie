@@ -11,6 +11,11 @@ import UIKit
 class DiscoverCell: UICollectionViewCell {
     
     let discoverPosterController = DiscoverPosterController()
+    var discoverType: DiscoverType! {
+        didSet {
+            print(discoverType)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -29,6 +29,8 @@
 		AEBB552F237E99D500E1B957 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB552E237E99D500E1B957 /* Keys.swift */; };
 		AEBB5531237E9A2600E1B957 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5530237E9A2600E1B957 /* Router.swift */; };
 		AEBB5533237EBB7900E1B957 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5532237EBB7900E1B957 /* ApiManager.swift */; };
+		AEBB5536237EE69B00E1B957 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5535237EE69B00E1B957 /* DiscoverViewModel.swift */; };
+		AEBB553823829D1400E1B957 /* DiscoverSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB553723829D1400E1B957 /* DiscoverSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		AEBB552E237E99D500E1B957 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		AEBB5530237E9A2600E1B957 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		AEBB5532237EBB7900E1B957 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		AEBB5535237EE69B00E1B957 /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
+		AEBB553723829D1400E1B957 /* DiscoverSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverSection.swift; sourceTree = "<group>"; };
 		FF3682695E62EBC69ADAF966 /* Pods_letsmovieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_letsmovieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -165,6 +169,7 @@
 		AE02AA62237BF8F300185B47 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				AEBB5534237EE68900E1B957 /* Discover */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 		AE02AA64237BF90100185B47 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AEBB553723829D1400E1B957 /* DiscoverSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,6 +254,14 @@
 				AEBB552E237E99D500E1B957 /* Keys.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		AEBB5534237EE68900E1B957 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				AEBB5535237EE69B00E1B957 /* DiscoverViewModel.swift */,
+			);
+			path = Discover;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,12 +442,14 @@
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AEBB5531237E9A2600E1B957 /* Router.swift in Sources */,
 				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
+				AEBB553823829D1400E1B957 /* DiscoverSection.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
 				AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */,
 				AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */,
 				AEBB552F237E99D500E1B957 /* Keys.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,
 				AE02AA4323798E8000185B47 /* SceneDelegate.swift in Sources */,
+				AEBB5536237EE69B00E1B957 /* DiscoverViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

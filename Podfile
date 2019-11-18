@@ -9,6 +9,8 @@ target 'letsmovie' do
   pod 'Alamofire'
   pod 'RxSwift'
   pod 'Action'
+  pod 'RxCocoa'
+  pod 'RxDataSources'
 
   target 'letsmovieTests' do
     inherit! :search_paths

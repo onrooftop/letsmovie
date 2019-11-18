@@ -11,8 +11,8 @@ import UIKit
 class DiscoverHeader: UICollectionReusableView {
     
     private var horizontalStackView = DiscoverHeader.horizontalStackView()
-    private var titleLabel = DiscoverHeader.titleLabel()
-    private var seeAllButton = DiscoverHeader.seeAllButton()
+    var titleLabel = DiscoverHeader.titleLabel()
+    var seeAllButton = DiscoverHeader.seeAllButton()
     
     private let padding: CGFloat = 16
     

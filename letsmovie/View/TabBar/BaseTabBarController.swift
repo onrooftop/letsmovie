@@ -27,10 +27,13 @@ class BaseTabBarController: UITabBarController {
     
     private func setupTabBarItems() {
         //MARK: DiscoverController
-        let discoverController = DiscoverController()
+        var discoverController = DiscoverController()
         discoverController.tabBarItem.image = UIImage(named: "eye")
         discoverController.tabBarItem.title = ""
         let discoverNavController = UINavigationController(rootViewController: discoverController)
+        
+        let discoverViewModel = DiscoverViewModel()
+        discoverController.bind(viewModel: discoverViewModel)
         
         //MARK: MeController
         let meController = MeController()
@@ -42,6 +45,7 @@ class BaseTabBarController: UITabBarController {
             discoverNavController, meNavController
         ]
     }
+    
     
     private func setInsetsTabBarItemsImage(with padding: UIEdgeInsets) {
         
