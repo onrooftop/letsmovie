@@ -10,10 +10,12 @@ import UIKit
 
 class DiscoverCell: UICollectionViewCell {
     
-    let discoverPosterController = DiscoverPosterController()
+    var discoverPosterController = DiscoverPosterController()
     var discoverType: DiscoverType! {
         didSet {
-            print(discoverType)
+            let discoverPosterViewModel = DiscoverPosterViewModel(networkSession: ApiManager.shared)
+            discoverPosterController.bind(viewModel: discoverPosterViewModel)
+            discoverPosterViewModel.discoverType.onNext(discoverType)
         }
     }
     

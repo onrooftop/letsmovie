@@ -10,7 +10,7 @@ import UIKit
 
 class PosterCell: UICollectionViewCell {
     
-    private var posterImageView = PosterCell.posterImageView()
+    var posterImageView = PosterCell.posterImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +40,8 @@ extension PosterCell {
         let iv = UIImageView()
         iv.backgroundColor = .lightGray
         iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 2
         return iv
     }
 }

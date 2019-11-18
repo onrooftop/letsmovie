@@ -35,7 +35,7 @@ enum Router: URLRequestConvertible {
         case .nowPlaying(let page):
             return "/movie/now_playing?page=\(page)"
         case .upcoming(let page):
-            return "movie/upcoming?page=\(page)"
+            return "/movie/upcoming?page=\(page)"
         }
     }
     

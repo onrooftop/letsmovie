@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
+import Kingfisher
 
-class DiscoverPosterController: UICollectionViewController {
+class DiscoverPosterController: UICollectionViewController, ViewModelBindableType{
     
     private let cellId = "cellId"
+    private let disposeBag = DisposeBag()
+    var viewModel: DiscoverPosterViewModel!
+    
+//    var dataSource
     
     init() {
         let layout = SnappingHorizontalFlowLayout()
@@ -29,6 +37,23 @@ class DiscoverPosterController: UICollectionViewController {
         setupView()
         setupCollectionView()
     }
+    
+    func bindViewModel() {
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        
+        viewModel.posters
+            .bind(to: collectionView.rx.items(cellIdentifier: self.cellId, cellType: PosterCell.self)) {
+                (row, data, cell) in
+                guard let url = ApiManager.shared.posterImageUrl(posterPath: data.posterPath) else { return }
+                cell.posterImageView.kf.setImage(with: url)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+    }
 }
 
 //MARK:- UI Elements
@@ -46,17 +71,8 @@ extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
         collectionView.showsHorizontalScrollIndicator = false
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PosterCell
-        return cell
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let assumedRatio: CGFloat = 16 / 9
+        let assumedRatio: CGFloat = 4 / 3
         let height: CGFloat = view.frame.height
         let width: CGFloat = height * 1 / assumedRatio
         return .init(width: width, height: height)
