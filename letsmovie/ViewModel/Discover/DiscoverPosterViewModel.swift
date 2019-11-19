@@ -40,7 +40,7 @@ class DiscoverPosterViewModel {
         self.title = Observable.just(discoverType.rawValue)
         
         posters = PublishSubject<[DiscoverPosterSection]>()
-        pageNumber = BehaviorSubject(value: 490)
+        pageNumber = BehaviorSubject(value: 1)
         totalPage = PublishSubject<Int>()
         
         fetchData = pageNumber.asObserver()
