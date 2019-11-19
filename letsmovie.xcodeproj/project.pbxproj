@@ -15,6 +15,8 @@
 		AE02AA4A23798E8000185B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE02AA4923798E8000185B47 /* Assets.xcassets */; };
 		AE02AA4D23798E8000185B47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE02AA4B23798E8000185B47 /* LaunchScreen.storyboard */; };
 		AE02AA5823798E8000185B47 /* letsmovieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE02AA5723798E8000185B47 /* letsmovieTests.swift */; };
+		AE7F01A52383E5FB0030F1F2 /* DiscoverPosterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01A42383E5FB0030F1F2 /* DiscoverPosterSection.swift */; };
+		AE7F01A72383FB3E0030F1F2 /* SeeAllFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01A62383FB3E0030F1F2 /* SeeAllFooter.swift */; };
 		AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */; };
 		AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */; };
 		AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5510237C129200E1B957 /* DiscoverController.swift */; };
@@ -63,6 +65,8 @@
 		AE02AA5323798E8000185B47 /* letsmovieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = letsmovieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE02AA5723798E8000185B47 /* letsmovieTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = letsmovieTests.swift; sourceTree = "<group>"; };
 		AE02AA5923798E8000185B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AE7F01A42383E5FB0030F1F2 /* DiscoverPosterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPosterSection.swift; sourceTree = "<group>"; };
+		AE7F01A62383FB3E0030F1F2 /* SeeAllFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllFooter.swift; sourceTree = "<group>"; };
 		AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		AEBB5510237C129200E1B957 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 			children = (
 				AEBB553723829D1400E1B957 /* DiscoverSection.swift */,
 				AEBB553B2382C1F500E1B957 /* DiscoverPoster.swift */,
+				AE7F01A42383E5FB0030F1F2 /* DiscoverPosterSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */,
 				AEBB5523237D821300E1B957 /* DiscoverPosterController.swift */,
 				AEBB553D238320A800E1B957 /* DiscoverSeeAllController.swift */,
+				AE7F01A62383FB3E0030F1F2 /* SeeAllFooter.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -456,11 +462,13 @@
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AEBB5531237E9A2600E1B957 /* Router.swift in Sources */,
 				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
+				AE7F01A52383E5FB0030F1F2 /* DiscoverPosterSection.swift in Sources */,
 				AEBB553C2382C1F500E1B957 /* DiscoverPoster.swift in Sources */,
 				AEBB553823829D1400E1B957 /* DiscoverSection.swift in Sources */,
 				AEBB553E238320A800E1B957 /* DiscoverSeeAllController.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
 				AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */,
+				AE7F01A72383FB3E0030F1F2 /* SeeAllFooter.swift in Sources */,
 				AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */,
 				AEBB552F237E99D500E1B957 /* Keys.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,

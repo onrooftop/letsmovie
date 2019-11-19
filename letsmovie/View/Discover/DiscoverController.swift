@@ -57,9 +57,10 @@ class DiscoverController: UICollectionViewController, ViewModelBindableType {
         
         viewModel.seeAllViewModel
             .subscribe(onNext: { (viewModel) in
-                var vc = DiscoverSeeAllController()
-                vc.bind(viewModel: viewModel)
-                self.navigationController?.pushViewController(vc, animated: true)
+                var discoverSeeAllVC = DiscoverSeeAllController()
+                discoverSeeAllVC.bind(viewModel: viewModel)
+                discoverSeeAllVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(discoverSeeAllVC, animated: true)
             })
             .disposed(by: disposeBag)
     }

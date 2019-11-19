@@ -15,15 +15,22 @@ class DiscoverPosterViewModel {
     let loadMoreData: PublishSubject<Void>
     
     //MARK: Output
-    let posters: BehaviorSubject<[DiscoverResult]>
+    let cannotLoadMore: Observable<Bool>
     let title: Observable<String>
+    var sections: Observable<[DiscoverPosterSection]> {
+        return posters
+    }
     
+    private let posters: PublishSubject<[DiscoverPosterSection]>
     private let pageNumber: BehaviorSubject<Int>
     private let disposeBag = DisposeBag()
     private let service: NetworkSession
     private var discoverPosters: [DiscoverPoster] = []
     private var discoverResults: [DiscoverResult] = []
-    private var currentPage = 0
+    private var currentPage = 1
+    private let totalPage: PublishSubject<Int>
+    private let isFetching: Observable<Bool>
+    private let fetchData: Observable<Data>
     
     init(networkSession: NetworkSession, discoverType: DiscoverType) {
         self.service = networkSession
@@ -32,22 +39,39 @@ class DiscoverPosterViewModel {
         loadMoreData = PublishSubject<Void>()
         self.title = Observable.just(discoverType.rawValue)
         
-        posters = BehaviorSubject(value: [])
-        pageNumber = BehaviorSubject(value: 1)
+        posters = PublishSubject<[DiscoverPosterSection]>()
+        pageNumber = BehaviorSubject(value: 490)
+        totalPage = PublishSubject<Int>()
         
-        pageNumber.asObserver()
-            .flatMap { self.service.request(discoverType: self.discoverType, page: $0) }
-            .map{ try! JSONDecoder().decode(DiscoverPoster.self, from: $0) }
-            .subscribe(onNext: { [unowned self] (discoverPoster) in
-                self.discoverPosters.append(discoverPoster)
-                self.discoverResults += discoverPoster.results
-                self.posters.onNext(self.discoverResults)
-            })
-            .disposed(by: disposeBag)
+        fetchData = pageNumber.asObserver()
+            .flatMap { networkSession.request(discoverType: discoverType, page: $0) }
+        
+        isFetching = Observable.merge(
+            pageNumber.map { _ in true },
+            fetchData.map { _ in false }
+        )
+        
+        cannotLoadMore = Observable.combineLatest(
+                pageNumber, totalPage
+            )
+            .map{ $0 >= $1 }
 
         
+        fetchData
+            .map{ try? JSONDecoder().decode(DiscoverPoster.self, from: $0) }
+            .filter{ $0 != nil }
+            .subscribe(onNext: { [unowned self] (discoverPoster) in
+                self.discoverPosters.append(discoverPoster!)
+                self.discoverResults += discoverPoster!.results
+                self.totalPage.onNext(discoverPoster!.totalPages)
+                self.posters.onNext([DiscoverPosterSection(header: "", items: self.discoverResults)])
+            })
+            .disposed(by: disposeBag)
+  
         loadMoreData
-            .flatMap{ Observable.just(self.currentPage + 1) }
+            .withLatestFrom(isFetching)
+            .filter{ $0 == false}
+            .flatMap{ _ in Observable.just(self.currentPage + 1) }
             .bind(to: pageNumber)
             .disposed(by: disposeBag)
         

@@ -21,7 +21,7 @@ struct DiscoverPoster: Decodable {
 
 struct DiscoverResult: Decodable {
     let id: Int
-    let posterPath: String
+    let posterPath: String?
     
     enum CodingKeys: String, CodingKey {
         case id

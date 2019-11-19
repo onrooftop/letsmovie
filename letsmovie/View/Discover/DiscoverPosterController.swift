@@ -40,12 +40,10 @@ class DiscoverPosterController: UICollectionViewController, ViewModelBindableTyp
         collectionView.delegate = nil
         collectionView.dataSource = nil
         
-        viewModel.posters
-            .bind(to: collectionView.rx.items(cellIdentifier: self.cellId, cellType: PosterCell.self)) {
-                (row, data, cell) in
-                guard let url = ApiManager.shared.posterImageUrl(posterPath: data.posterPath) else { return }
-                cell.posterImageView.kf.setImage(with: url)
-            }
+        let dataSource = createDataSource()
+        
+        viewModel.sections
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         collectionView.rx
@@ -61,6 +59,20 @@ extension DiscoverPosterController {
     }
 }
 
+//MARK:- RxDataSource
+extension DiscoverPosterController {
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! PosterCell
+            if let url = ApiManager.shared.posterImageUrl(posterPath: item.posterPath) {
+                cell.posterImageView.kf.setImage(with: url)
+            }
+            return cell
+        })
+        return dataSource
+    }
+}
+
 //MARK:- CollectionView Delegate and Datasource
 extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
@@ -70,7 +82,7 @@ extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let assumedRatio: CGFloat = 4 / 3
+        let assumedRatio: CGFloat = 3 / 2
         let height: CGFloat = view.frame.height
         let width: CGFloat = height * 1 / assumedRatio
         return .init(width: width, height: height)

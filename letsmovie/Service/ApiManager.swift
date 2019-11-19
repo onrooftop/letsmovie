@@ -24,8 +24,10 @@ class ApiManager: NetworkSession {
     private let secureBaseUrl = "https://image.tmdb.org/t/p/"
     private let posterSize = "w342"
     
-    func posterImageUrl(posterPath: String) -> URL? {
-        return URL(string: secureBaseUrl + posterSize + posterPath)
+    func posterImageUrl(posterPath: String?) -> URL? {
+        guard let posterPath = posterPath else { return nil }
+        let urlString = secureBaseUrl + posterSize + posterPath
+        return URL(string: urlString)
     }
     
     func request(router: Router) -> Single<Data> {
