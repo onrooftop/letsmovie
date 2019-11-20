@@ -86,6 +86,7 @@ extension DiscoverController {
     func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverSection> {
         let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! DiscoverCell
+            cell.delegate = self
             cell.discoverType = item
             return cell
         })
@@ -123,5 +124,14 @@ extension DiscoverController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 0, left: 0, bottom: 10, right: 0)
+    }
+}
+
+//MARK:- Poster Delegate
+extension DiscoverController: PosterDelegate {
+    func didSelectItem(with id: Int) {
+        let movieVC = MovieController()
+        movieVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(movieVC, animated: true)
     }
 }

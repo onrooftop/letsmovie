@@ -10,12 +10,13 @@ import UIKit
 
 class DiscoverCell: UICollectionViewCell {
     
+    weak var delegate: PosterDelegate?
     var discoverPosterController = DiscoverPosterController()
     var discoverType: DiscoverType! {
         didSet {
             let discoverPosterViewModel = DiscoverPosterViewModel(networkSession: ApiManager.shared, discoverType: discoverType)
             discoverPosterController.bind(viewModel: discoverPosterViewModel)
-
+            discoverPosterController.delegate = self
         }
     }
     
@@ -28,6 +29,11 @@ class DiscoverCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+extension DiscoverCell: PosterDelegate {
+    func didSelectItem(with id: Int) {
+        delegate?.didSelectItem(with: id)
     }
 }
 

@@ -12,12 +12,16 @@ import RxCocoa
 import RxDataSources
 import Kingfisher
 
+protocol PosterDelegate: class {
+    func didSelectItem(with id: Int)
+}
+
 class DiscoverPosterController: UICollectionViewController, ViewModelBindableType{
     
     private let cellId = "cellId"
     private let disposeBag = DisposeBag()
     var viewModel: DiscoverPosterViewModel!
-    
+    weak var delegate: PosterDelegate?
     init() {
         let layout = SnappingHorizontalFlowLayout()
         super.init(collectionViewLayout: layout)
@@ -46,8 +50,18 @@ class DiscoverPosterController: UICollectionViewController, ViewModelBindableTyp
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
+        viewModel.selectedId
+            .subscribe(onNext: { (id) in
+                self.delegate?.didSelectItem(with: id)
+            })
+            .disposed(by: disposeBag)
+        
         collectionView.rx
             .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .bind(to: viewModel.selectedItem)
             .disposed(by: disposeBag)
     }
 }

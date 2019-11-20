@@ -13,8 +13,10 @@ class DiscoverPosterViewModel {
     //MARK: Input
     let discoverType: DiscoverType
     let loadMoreData: PublishSubject<Void>
+    let selectedItem: PublishSubject<IndexPath>
     
     //MARK: Output
+    let selectedId: Observable<Int>
     let cannotLoadMore: Observable<Bool>
     let title: Observable<String>
     var sections: Observable<[DiscoverPosterSection]> {
@@ -38,10 +40,16 @@ class DiscoverPosterViewModel {
         self.discoverType = discoverType
         loadMoreData = PublishSubject<Void>()
         self.title = Observable.just(discoverType.rawValue)
+        self.selectedItem = PublishSubject<IndexPath>()
         
         posters = PublishSubject<[DiscoverPosterSection]>()
         pageNumber = BehaviorSubject(value: 1)
         totalPage = PublishSubject<Int>()
+        
+        selectedId = Observable.combineLatest(
+                selectedItem, posters
+            )
+            .map{ $1[$0.section].items[$0.item].id }
         
         fetchData = pageNumber.asObserver()
             .flatMap { networkSession.request(discoverType: discoverType, page: $0) }
