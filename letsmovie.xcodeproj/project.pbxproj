@@ -21,6 +21,9 @@
 		AE7F01AC23854A6B0030F1F2 /* StretchyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01AB23854A6B0030F1F2 /* StretchyHeaderFlowLayout.swift */; };
 		AE7F01AE238585500030F1F2 /* MovieHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01AD238585500030F1F2 /* MovieHeader.swift */; };
 		AE7F01B0238673790030F1F2 /* MovieButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01AF238673790030F1F2 /* MovieButtonsCell.swift */; };
+		AE7F01B22386894A0030F1F2 /* MovieGenresCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01B12386894A0030F1F2 /* MovieGenresCell.swift */; };
+		AE7F01B423868D650030F1F2 /* MovieGenresController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01B323868D650030F1F2 /* MovieGenresController.swift */; };
+		AE7F01B6238695B70030F1F2 /* MovieGenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01B5238695B70030F1F2 /* MovieGenreCell.swift */; };
 		AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */; };
 		AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */; };
 		AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5510237C129200E1B957 /* DiscoverController.swift */; };
@@ -75,6 +78,9 @@
 		AE7F01AB23854A6B0030F1F2 /* StretchyHeaderFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		AE7F01AD238585500030F1F2 /* MovieHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeader.swift; sourceTree = "<group>"; };
 		AE7F01AF238673790030F1F2 /* MovieButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieButtonsCell.swift; sourceTree = "<group>"; };
+		AE7F01B12386894A0030F1F2 /* MovieGenresCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenresCell.swift; sourceTree = "<group>"; };
+		AE7F01B323868D650030F1F2 /* MovieGenresController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenresController.swift; sourceTree = "<group>"; };
+		AE7F01B5238695B70030F1F2 /* MovieGenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreCell.swift; sourceTree = "<group>"; };
 		AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		AEBB5510237C129200E1B957 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
@@ -241,6 +247,9 @@
 				AE7F01A9238525350030F1F2 /* MovieController.swift */,
 				AE7F01AD238585500030F1F2 /* MovieHeader.swift */,
 				AE7F01AF238673790030F1F2 /* MovieButtonsCell.swift */,
+				AE7F01B12386894A0030F1F2 /* MovieGenresCell.swift */,
+				AE7F01B323868D650030F1F2 /* MovieGenresController.swift */,
+				AE7F01B5238695B70030F1F2 /* MovieGenreCell.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -480,6 +489,7 @@
 				AE7F01AC23854A6B0030F1F2 /* StretchyHeaderFlowLayout.swift in Sources */,
 				AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */,
 				AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */,
+				AE7F01B423868D650030F1F2 /* MovieGenresController.swift in Sources */,
 				AEBB553A2382B06300E1B957 /* DiscoverPosterViewModel.swift in Sources */,
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AEBB5531237E9A2600E1B957 /* Router.swift in Sources */,
@@ -489,6 +499,7 @@
 				AEBB553823829D1400E1B957 /* DiscoverSection.swift in Sources */,
 				AEBB553E238320A800E1B957 /* DiscoverSeeAllController.swift in Sources */,
 				AEBB5513237C12B300E1B957 /* MeController.swift in Sources */,
+				AE7F01B6238695B70030F1F2 /* MovieGenreCell.swift in Sources */,
 				AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */,
 				AE7F01A72383FB3E0030F1F2 /* SeeAllFooter.swift in Sources */,
 				AEBB5524237D821300E1B957 /* DiscoverPosterController.swift in Sources */,
@@ -496,6 +507,7 @@
 				AE7F01AA238525350030F1F2 /* MovieController.swift in Sources */,
 				AE02AA4123798E8000185B47 /* AppDelegate.swift in Sources */,
 				AE02AA4323798E8000185B47 /* SceneDelegate.swift in Sources */,
+				AE7F01B22386894A0030F1F2 /* MovieGenresCell.swift in Sources */,
 				AEBB5536237EE69B00E1B957 /* DiscoverViewModel.swift in Sources */,
 				AE7F01AE238585500030F1F2 /* MovieHeader.swift in Sources */,
 			);

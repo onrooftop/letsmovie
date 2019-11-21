@@ -13,6 +13,7 @@ class MovieController: UICollectionViewController {
     private let cellId = "cellId"
     private let headerId = "headerId"
     private let buttonsCellId = "buttonsCellId"
+    private let genresCellId = "genresCellId"
     private let spacingHeaderId = "spacingHeaderId"
     
     private let minimumLineSpacing: CGFloat = 10
@@ -54,6 +55,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(MovieHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
+        collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: genresCellId)
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: spacingHeaderId)
     }
     
@@ -73,8 +75,18 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonsCellId, for: indexPath)
-            return cell
+            switch indexPath.item {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonsCellId, for: indexPath) as! MovieButtonsCell
+                return cell
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genresCellId, for: indexPath)
+                return cell
+            default:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+                cell.backgroundColor = .red
+                return cell
+            }
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
             cell.backgroundColor = .red
@@ -87,30 +99,49 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        var numberOfItems = 40
         switch section {
         case 0:
-            return 1
+            numberOfItems = 2
         default:
-            return 40
+            numberOfItems = 40
         }
+        
+        return numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        var height: CGFloat = minimumLineSpacing
         switch section {
         case 0:
-            return .init(width: view.frame.width, height: 400)
+            height = 400
         default:
-            return .init(width: view.frame.width, height: minimumLineSpacing)
+            height = minimumLineSpacing
         }
+        
+        return .init(width: view.frame.width, height: height)
     }
    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var height: CGFloat = 50
         switch indexPath.section {
         case 0:
-            return .init(width: view.frame.width, height: 64)
+            switch indexPath.item {
+            case 0:
+                height = 54
+            case 1:
+                height = 42
+            default:
+                height = 50
+            }
         default:
-            return .init(width: view.frame.width, height: 50)
+            height = 10
         }
+        
+        return .init(width: view.frame.width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

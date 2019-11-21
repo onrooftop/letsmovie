@@ -14,12 +14,15 @@ class MovieButtonsCell: UICollectionViewCell {
     var watchlistButton = MovieButtonsCell.createButton(title: "Watchlist")
     var watchedButton = MovieButtonsCell.createButton(title: "Watched")
     
+    private let minimunLineSpacing: CGFloat = 10
     private let buttonSpacing: CGFloat = 12
     private lazy var stackViewPadding: UIEdgeInsets = {
-        return .init(top: self.buttonSpacing, left: self.buttonSpacing / 2, bottom: -self.buttonSpacing, right: -self.buttonSpacing / 2)
+        return .init(top: self.minimunLineSpacing, left: self.buttonSpacing / 2, bottom: 0, right: -self.buttonSpacing / 2)
     }()
     
-    private let buttonHeight: CGFloat = 40
+    private var buttonHeight: CGFloat {
+        return self.frame.height - self.minimunLineSpacing
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
