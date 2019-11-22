@@ -14,9 +14,13 @@ class MovieController: UICollectionViewController {
     private let headerId = "headerId"
     private let buttonsCellId = "buttonsCellId"
     private let genresCellId = "genresCellId"
+    private let overviewCellId = "overviewCellId"
     private let spacingHeaderId = "spacingHeaderId"
     
     private let minimumLineSpacing: CGFloat = 10
+    
+    //TODO: Remove this when finished viewModel
+    private let overviewText = "Elsa, Anna, Kristoff and Olaf are going far in the forest to know the truth about an ancient mystery of their kingdom."
     
     init() {
         let layout = StretchyHeaderFlowLayout()
@@ -56,6 +60,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         collectionView.register(MovieHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
         collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: genresCellId)
+        collectionView.register(MovieOverviewCell.self, forCellWithReuseIdentifier: overviewCellId)
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: spacingHeaderId)
     }
     
@@ -82,6 +87,10 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genresCellId, for: indexPath)
                 return cell
+            case 2:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: overviewCellId, for: indexPath) as! MovieOverviewCell
+                cell.overviewLabel.text = overviewText
+                return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
                 cell.backgroundColor = .red
@@ -103,7 +112,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         var numberOfItems = 40
         switch section {
         case 0:
-            numberOfItems = 2
+            numberOfItems = 3
         default:
             numberOfItems = 40
         }
@@ -134,6 +143,11 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
                 height = 54
             case 1:
                 height = 42
+            case 2:
+                let dummyCell = MovieOverviewCell()
+                dummyCell.overviewLabel.text = overviewText
+                let width = view.frame.width - dummyCell.padding.left - dummyCell.padding.right
+                height = dummyCell.overviewLabel.height(width: width) + dummyCell.overviewTitleLabel.height(width: width)
             default:
                 height = 50
             }
@@ -146,5 +160,25 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
+    }
+    
+}
+
+extension String {
+    func height(width: CGFloat, font: UIFont) -> CGFloat {
+        let dummySize = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingRect = self.boundingRect(with: dummySize, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+        return boundingRect.height
+    }
+}
+
+
+extension UILabel {
+    func height(width: CGFloat) -> CGFloat {
+        if let text = self.text {
+            return text.height(width: width, font: self.font)
+        }
+        
+        return 0
     }
 }

@@ -15,7 +15,7 @@ class MovieGenresController: UICollectionViewController {
     private let contentInset: UIEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 10)
     private let cellPadding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: 12)
     //TODO: Remove this when we have viewModel
-    let genres = ["Science Fiction", "War", "Romance", "Mystery", "Music"]
+    let genres = ["War", "Romance", "Mystery", "Music", "Science Fiction"]
     init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
