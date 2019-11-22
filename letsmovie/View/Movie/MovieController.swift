@@ -16,6 +16,7 @@ class MovieController: UICollectionViewController {
     private let buttonsCellId = "buttonsCellId"
     private let genresCellId = "genresCellId"
     private let overviewCellId = "overviewCellId"
+    private let creditCellId = "creditCellId"
     private let spacingHeaderId = "spacingHeaderId"
     
     private let minimumLineSpacing: CGFloat = 10
@@ -59,10 +60,11 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
-        collectionView.register(CreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: creditHeaderId)
+        collectionView.register(MovieCreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: creditHeaderId)
         
         collectionView.register(MovieHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
+        collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: creditCellId)
         collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
         collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: genresCellId)
         collectionView.register(MovieOverviewCell.self, forCellWithReuseIdentifier: overviewCellId)
@@ -75,7 +77,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MovieHeader
           return header
         case 1:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! CreditHeader
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! MovieCreditHeader
             header.titleLabel.text = "Cast"
             return header
         default:
@@ -106,8 +108,8 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
                 return cell
             }
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            cell.backgroundColor = .red
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: creditCellId, for: indexPath) as! MovieCreditCell
+
             return cell
         }
     }
@@ -123,7 +125,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         case 0:
             numberOfItems = 3
         case 1:
-            numberOfItems = 1
+            numberOfItems = 5
         default:
             numberOfItems = 40
         }
@@ -165,7 +167,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
                 height = 50
             }
         default:
-            height = 50
+            height = 64
         }
         
         return .init(width: view.frame.width, height: height)

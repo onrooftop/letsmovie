@@ -8,11 +8,11 @@
 
 import UIKit
 
-class CreditHeader: UICollectionReusableView {
+class MovieCreditHeader: UICollectionReusableView {
     
-    var titleLabel = CreditHeader.titleLabel()
+    var titleLabel = MovieCreditHeader.titleLabel()
     var padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
-    
+    var bottomAnchorConstant: CGFloat = -10
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -25,7 +25,7 @@ class CreditHeader: UICollectionReusableView {
 }
 
 //MARK:- UI Elements
-extension CreditHeader {
+extension MovieCreditHeader {
     private func setupView() {
         backgroundColor = .white
         
@@ -34,7 +34,7 @@ extension CreditHeader {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.left),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: padding.right),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottomAnchorConstant)
         ])
     }
     
