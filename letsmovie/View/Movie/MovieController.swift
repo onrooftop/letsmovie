@@ -12,6 +12,7 @@ class MovieController: UICollectionViewController {
     
     private let cellId = "cellId"
     private let headerId = "headerId"
+    private let creditHeaderId = "creditHeaderId"
     private let buttonsCellId = "buttonsCellId"
     private let genresCellId = "genresCellId"
     private let overviewCellId = "overviewCellId"
@@ -57,7 +58,11 @@ extension MovieController {
 extension MovieController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        collectionView.register(CreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: creditHeaderId)
+        
         collectionView.register(MovieHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        
         collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
         collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: genresCellId)
         collectionView.register(MovieOverviewCell.self, forCellWithReuseIdentifier: overviewCellId)
@@ -69,6 +74,10 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         case 0:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MovieHeader
           return header
+        case 1:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! CreditHeader
+            header.titleLabel.text = "Cast"
+            return header
         default:
             let spacingHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: spacingHeaderId, for: indexPath)
             spacingHeader.backgroundColor = .clear
@@ -113,6 +122,8 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         switch section {
         case 0:
             numberOfItems = 3
+        case 1:
+            numberOfItems = 1
         default:
             numberOfItems = 40
         }
@@ -126,6 +137,8 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         switch section {
         case 0:
             height = 400
+        case 1:
+            height = 50
         default:
             height = minimumLineSpacing
         }
@@ -152,7 +165,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
                 height = 50
             }
         default:
-            height = 10
+            height = 50
         }
         
         return .init(width: view.frame.width, height: height)
