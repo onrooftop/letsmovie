@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MovieOverviewCell: UICollectionViewCell, UsableViewModel {
     
     var overviewTitleLabel = MovieOverviewCell.overviewTitleLabel()
     var overviewLabel = MovieOverviewCell.overviewLabel()
     
+    private let disposeBag = DisposeBag()
     let padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +31,10 @@ class MovieOverviewCell: UICollectionViewCell, UsableViewModel {
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieOverviewViewModel)
+        
+        viewModel.overview
+            .bind(to: overviewLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
