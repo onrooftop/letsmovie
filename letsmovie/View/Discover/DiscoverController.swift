@@ -12,14 +12,13 @@ import RxCocoa
 import RxSwift
 import Action
 
-class DiscoverController: UICollectionViewController, ViewModelBindableType {
-
+class DiscoverController: UICollectionViewController, UsableViewModel {
+    
     private let cellId = "cellId"
     private let headerId = "headerId"
     
     private let disposeBag = DisposeBag()
     
-    var viewModel: DiscoverViewModel!
     var dataSource: RxCollectionViewSectionedReloadDataSource<DiscoverSection>!
     
     init() {
@@ -40,7 +39,11 @@ class DiscoverController: UICollectionViewController, ViewModelBindableType {
         setupCollectionView()
     }
     
+    var bindedViewModel: ViewModelType!
+    var viewModel: DiscoverViewModel!
+    
     func bindViewModel() {
+        viewModel = (bindedViewModel as! DiscoverViewModel)
         
         collectionView.dataSource = nil
         collectionView.delegate = nil
@@ -130,7 +133,9 @@ extension DiscoverController: UICollectionViewDelegateFlowLayout {
 //MARK:- Poster Delegate
 extension DiscoverController: PosterDelegate {
     func didSelectItem(with id: Int) {
-        let movieVC = MovieController()
+        let viewModel = MovieViewModel(id: id, service: ApiManager.shared)
+        var movieVC = MovieController()
+        movieVC.bind(viewModel: viewModel)
         movieVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(movieVC, animated: true)
     }

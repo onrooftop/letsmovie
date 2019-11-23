@@ -12,13 +12,12 @@ import RxCocoa
 import Kingfisher
 import RxDataSources
 
-class DiscoverSeeAllController: UICollectionViewController, ViewModelBindableType {
+class DiscoverSeeAllController: UICollectionViewController, UsableViewModel {
     
     private let cellId = "cellId"
     private let footerId = "footId"
     private let paddingInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
     private let padding: CGFloat = 10
-    var viewModel: DiscoverPosterViewModel!
     let disposeBag = DisposeBag()
     
     init() {
@@ -38,7 +37,11 @@ class DiscoverSeeAllController: UICollectionViewController, ViewModelBindableTyp
         setupCollectionView()
     }
     
+    var viewModel: DiscoverPosterViewModel!
+    var bindedViewModel: ViewModelType!
     func bindViewModel() {
+        viewModel = (bindedViewModel as? DiscoverPosterViewModel)
+        
         viewModel.title
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
@@ -58,7 +61,7 @@ class DiscoverSeeAllController: UICollectionViewController, ViewModelBindableTyp
         
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         
-        self.viewModel.cannotLoadMore
+        viewModel.cannotLoadMore
             .subscribe(onNext: { (isHidden) in
                 if isHidden {
                     layout.footerReferenceSize = .zero

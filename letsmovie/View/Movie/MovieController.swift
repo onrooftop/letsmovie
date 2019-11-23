@@ -7,22 +7,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxDataSources
+import RxCocoa
 
-class MovieController: UICollectionViewController {
-    
-    private let cellId = "cellId"
-    private let headerId = "headerId"
-    private let creditHeaderId = "creditHeaderId"
+class MovieController: UICollectionViewController, UsableViewModel {
     private let buttonsCellId = "buttonsCellId"
-    private let genresCellId = "genresCellId"
-    private let overviewCellId = "overviewCellId"
-    private let creditCellId = "creditCellId"
-    private let spacingHeaderId = "spacingHeaderId"
-    
     private let minimumLineSpacing: CGFloat = 10
-    
-    //TODO: Remove this when finished viewModel
-    private let overviewText = "Elsa, Anna, Kristoff and Olaf are going far in the forest to know the truth about an ancient mystery of their kingdom."
+    private let disposeBag = DisposeBag()
     
     init() {
         let layout = StretchyHeaderFlowLayout()
@@ -40,6 +32,26 @@ class MovieController: UICollectionViewController {
         setupNavigationController()
         setupCollectionView()
     }
+
+    var viewModel: MovieViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieViewModel)
+        
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        
+        let dataSource = createDataSource()
+        
+        viewModel.sectionViewModels
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        
+    }
 }
 
 //MARK:- UI Elements
@@ -55,83 +67,111 @@ extension MovieController {
     }
 }
 
+//MARK:- RxDataSoruce
+extension MovieController {
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>( configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.getIdentifier(from: viewModel), for: indexPath)
+            if var cell = cell as? ViewModelBindableType {
+                cell.bind(viewModel: viewModel)
+            }
+            return cell
+        })
+        
+        dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
+            let viewModel = dataSource.sectionModels[indexPath.section].header
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.getIdentifier(from: viewModel), for: indexPath)
+            if var header = header as? ViewModelBindableType {
+                header.bind(viewModel: viewModel)
+            }
+            return header
+        }
+        
+        return dataSource
+    }
+    
+    func getIdentifier(from viewModel: ViewModelType) -> String {
+        switch viewModel {
+        case is MovieHeaderViewModel:
+            return MovieHeaderViewModel.cellIdentifier
+            
+        case is MovieGenreViewModel:
+            return MovieGenreViewModel.cellIdentifier
+            
+        case is MovieOverviewViewModel:
+            return MovieOverviewViewModel.cellIdentifier
+            
+        case is MovieCreditHeaderViewModel:
+            return MovieCreditHeaderViewModel.cellIdentifier
+            
+        case is MovieCastViewModel:
+            return MovieCastViewModel.cellIdentifier
+            
+        default:
+            return ""
+        }
+    }
+}
+
 //MARK:- CollectionView Delegate DataSource
 extension MovieController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
-        collectionView.register(MovieCreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: creditHeaderId)
+        collectionView.register(MovieHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieHeaderViewModel.cellIdentifier)
         
-        collectionView.register(MovieHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        
-        collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: creditCellId)
         collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
-        collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: genresCellId)
-        collectionView.register(MovieOverviewCell.self, forCellWithReuseIdentifier: overviewCellId)
-        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: spacingHeaderId)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch indexPath.section {
-        case 0:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MovieHeader
-          return header
-        case 1:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! MovieCreditHeader
-            header.titleLabel.text = "Cast"
-            return header
-        default:
-            let spacingHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: spacingHeaderId, for: indexPath)
-            spacingHeader.backgroundColor = .clear
-            return spacingHeader
-        }
-      
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-        case 0:
-            switch indexPath.item {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonsCellId, for: indexPath) as! MovieButtonsCell
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genresCellId, for: indexPath)
-                return cell
-            case 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: overviewCellId, for: indexPath) as! MovieOverviewCell
-                cell.overviewLabel.text = overviewText
-                return cell
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-                cell.backgroundColor = .red
-                return cell
-            }
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: creditCellId, for: indexPath) as! MovieCreditCell
 
-            return cell
-        }
-    }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: MovieGenreViewModel.cellIdentifier)
         
-        var numberOfItems = 40
-        switch section {
-        case 0:
-            numberOfItems = 3
-        case 1:
-            numberOfItems = 5
-        default:
-            numberOfItems = 40
-        }
+        collectionView.register(MovieOverviewCell.self, forCellWithReuseIdentifier: MovieOverviewViewModel.cellIdentifier)
         
-        return numberOfItems
-    }
+        collectionView.register(MovieCreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieCreditHeaderViewModel.cellIdentifier)
+        
+        collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: MovieCastViewModel.cellIdentifier)
+}
+    
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        switch indexPath.section {
+//        case 0:
+//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MovieHeaderView
+//          return header
+//        case 1:
+//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! MovieCreditHeader
+//            header.titleLabel.text = "Cast"
+//            return header
+//        default:
+//            let spacingHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: spacingHeaderId, for: indexPath)
+//            spacingHeader.backgroundColor = .clear
+//            return spacingHeader
+//        }
+//
+//    }
+    
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        switch indexPath.section {
+//        case 0:
+//            switch indexPath.item {
+//            case 0:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonsCellId, for: indexPath) as! MovieButtonsCell
+//                return cell
+//            case 1:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genresCellId, for: indexPath)
+//                return cell
+//            case 2:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: overviewCellId, for: indexPath) as! MovieOverviewCell
+//                cell.overviewLabel.text = overviewText
+//                return cell
+//            default:
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+//                cell.backgroundColor = .red
+//                return cell
+//            }
+//        default:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: creditCellId, for: indexPath) as! MovieCreditCell
+//
+//            return cell
+//        }
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
@@ -160,7 +200,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
                 height = 42
             case 2:
                 let dummyCell = MovieOverviewCell()
-                dummyCell.overviewLabel.text = overviewText
+//                dummyCell.overviewLabel.text = overviewText
                 let width = view.frame.width - dummyCell.padding.left - dummyCell.padding.right
                 height = dummyCell.overviewLabel.height(width: width) + dummyCell.overviewTitleLabel.height(width: width)
             default:

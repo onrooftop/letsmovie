@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieGenresController: UICollectionViewController {
+class MovieGenresController: UICollectionViewController, UsableViewModel {
 
     private let cellId = "cellId"
     private let minimumLineSpacing: CGFloat = 10
@@ -31,6 +31,12 @@ class MovieGenresController: UICollectionViewController {
         
         setupView()
         setupCollectionView()
+    }
+    
+    var viewModel: MovieGenreViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieGenreViewModel)
     }
 }
 

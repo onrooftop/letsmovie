@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class DiscoverPosterViewModel {
+class DiscoverPosterViewModel: ViewModelType{
     //MARK: Input
     let discoverType: DiscoverType
     let loadMoreData: PublishSubject<Void>

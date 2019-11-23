@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieOverviewCell: UICollectionViewCell {
+class MovieOverviewCell: UICollectionViewCell, UsableViewModel {
     
     var overviewTitleLabel = MovieOverviewCell.overviewTitleLabel()
     var overviewLabel = MovieOverviewCell.overviewLabel()
@@ -22,6 +22,12 @@ class MovieOverviewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MovieOverviewViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieOverviewViewModel)
     }
 }
 

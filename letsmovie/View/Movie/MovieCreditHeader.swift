@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieCreditHeader: UICollectionReusableView {
+class MovieCreditHeader: UICollectionReusableView, UsableViewModel {
     
     var titleLabel = MovieCreditHeader.titleLabel()
     var padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
@@ -21,6 +21,12 @@ class MovieCreditHeader: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MovieCreditHeaderViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieCreditHeaderViewModel)
     }
 }
 

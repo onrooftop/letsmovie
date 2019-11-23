@@ -8,16 +8,21 @@
 
 import UIKit
 
-protocol ViewModelBindableType {
+protocol UsableViewModel: ViewModelBindableType, ViewModelCastableType { }
+
+protocol ViewModelCastableType {
     associatedtype ViewModel
     var viewModel: ViewModel! { get set }
-    
+}
+
+protocol ViewModelBindableType {
+    var bindedViewModel: ViewModelType! { get set }
     func bindViewModel()
 }
 
 extension ViewModelBindableType {
-    mutating func bind(viewModel: Self.ViewModel) {
-        self.viewModel = viewModel
+    mutating func bind(viewModel: ViewModelType) {
+        self.bindedViewModel = viewModel
         bindViewModel()
     }
 }

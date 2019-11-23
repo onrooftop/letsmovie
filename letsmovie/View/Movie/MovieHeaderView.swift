@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
+import Kingfisher
 
-class MovieHeader: UICollectionReusableView {
+class MovieHeaderView: UICollectionReusableView, UsableViewModel {
     
-    var backdropImageView = MovieHeader.backdropImageView()
-    var gradientLayer = MovieHeader.gradientLayer()
-    var titleLabel = MovieHeader.titleLabel()
-    var runtimeLabel = MovieHeader.runtimeLabel()
+    var backdropImageView = MovieHeaderView.backdropImageView()
+    var gradientLayer = MovieHeaderView.gradientLayer()
+    var titleLabel = MovieHeaderView.titleLabel()
+    var runtimeLabel = MovieHeaderView.runtimeLabel()
+    
+    private let disposeBag = DisposeBag()
     
     private var labelPadding: UIEdgeInsets = .init(top: 0, left: 24, bottom: -24, right: -24)
     override init(frame: CGRect) {
@@ -25,10 +30,31 @@ class MovieHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var viewModel: MovieHeaderViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieHeaderViewModel)
+        
+        viewModel.title
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.runtime
+            .bind(to: runtimeLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.backdropUrlString
+            .subscribe(onNext: { [unowned self] (url) in
+                guard let url = ApiManager.shared.posterImageUrl(posterPath: url) else { return }
+                self.backdropImageView.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 //MARK:- UI Elements
-extension MovieHeader {
+extension MovieHeaderView {
     private func setupView() {
         backgroundColor = .black
         

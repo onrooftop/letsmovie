@@ -11,7 +11,7 @@ import RxSwift
 import Action
 import RxCocoa
 
-class DiscoverViewModel {
+class DiscoverViewModel: ViewModelType {
     //input
     
     //output

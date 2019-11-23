@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieCreditCell: UICollectionViewCell {
+class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     
     var profileImageView = MovieCreditCell.profileImageView()
     var castNameLabel = MovieCreditCell.castNameLabel()
@@ -23,6 +23,12 @@ class MovieCreditCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MovieCastViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieCastViewModel)
     }
 }
 

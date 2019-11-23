@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieGenresCell: UICollectionViewCell {
+class MovieGenresCell: UICollectionViewCell, UsableViewModel{
     
     let movieGenresController = MovieGenresController()
     
@@ -20,6 +20,12 @@ class MovieGenresCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MovieGenreViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieGenreViewModel)
     }
 }
 

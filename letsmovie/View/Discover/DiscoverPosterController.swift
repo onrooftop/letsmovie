@@ -16,11 +16,10 @@ protocol PosterDelegate: class {
     func didSelectItem(with id: Int)
 }
 
-class DiscoverPosterController: UICollectionViewController, ViewModelBindableType{
+class DiscoverPosterController: UICollectionViewController, UsableViewModel {
     
     private let cellId = "cellId"
     private let disposeBag = DisposeBag()
-    var viewModel: DiscoverPosterViewModel!
     weak var delegate: PosterDelegate?
     init() {
         let layout = SnappingHorizontalFlowLayout()
@@ -40,7 +39,11 @@ class DiscoverPosterController: UICollectionViewController, ViewModelBindableTyp
         setupCollectionView()
     }
     
+    var viewModel: DiscoverPosterViewModel!
+    var bindedViewModel: ViewModelType!
     func bindViewModel() {
+        viewModel = (bindedViewModel as? DiscoverPosterViewModel)
+        
         collectionView.delegate = nil
         collectionView.dataSource = nil
         
