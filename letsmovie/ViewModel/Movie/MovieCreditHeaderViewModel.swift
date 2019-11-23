@@ -17,12 +17,12 @@ class MovieCreditHeaderViewModel: ViewModelType, CellIdentifier {
     
     static var cellIdentifier: String = "MovieCreditHeaderViewModel"
     
-    let credit: Observable<String>
+    let title: Observable<String>
     
     private let creditType: CreditType
     init(creditType: CreditType) {
         self.creditType = creditType
         
-        credit = .just(self.creditType.rawValue)
+        title = .just(self.creditType.rawValue)
     }
 }

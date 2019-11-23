@@ -31,7 +31,7 @@ class MovieCreditHeader: UICollectionReusableView, UsableViewModel {
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieCreditHeaderViewModel)
         
-        viewModel.credit
+        viewModel.title
             .bind(to: titleLabel.rx.text)
             .disposed(by: disposeBag)
     }
