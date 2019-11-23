@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MovieCreditHeader: UICollectionReusableView, UsableViewModel {
     
     var titleLabel = MovieCreditHeader.titleLabel()
     var padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
     var bottomAnchorConstant: CGFloat = -10
+    private let disposeBag = DisposeBag()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -27,6 +30,10 @@ class MovieCreditHeader: UICollectionReusableView, UsableViewModel {
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieCreditHeaderViewModel)
+        
+        viewModel.credit
+            .bind(to: titleLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
