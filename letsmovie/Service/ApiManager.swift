@@ -53,20 +53,32 @@ class ApiManager: NetworkSession {
     }
 }
 
+//MARK:- Image URL
 extension ApiManager {
     private static let secureBaseUrl = "https://image.tmdb.org/t/p/"
     
-    static func posterImageUrl(posterPath: String?, posterSize: PosterSize = .w342) -> URL? {
-        guard let posterPath = posterPath else { return nil }
-        let urlString = secureBaseUrl + posterSize.rawValue + posterPath
+    static func imageUrl(path: String?, size: String) -> URL? {
+        guard let path = path else { return nil }
+        let urlString = secureBaseUrl + size + path
         return URL(string: urlString)
     }
     
     enum PosterSize: String {
         case w342, w780, original
     }
-}
+    
+    static func posterImageUrl(posterPath: String?, posterSize: PosterSize = .w342) -> URL? {
+        return imageUrl(path: posterPath, size: posterSize.rawValue)
+    }
 
+    enum ProfileSize: String {
+        case w92, w342, original
+    }
+    
+    static func profileImageUrl(profilePath: String?, profileSize: ProfileSize = .w92) -> URL? {
+        return imageUrl(path: profilePath, size: profileSize.rawValue)
+    }
+}
 enum DataError: Error {
     case cantDecode
 }

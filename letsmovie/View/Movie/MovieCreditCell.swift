@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     
@@ -14,6 +17,8 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     var castNameLabel = MovieCreditCell.castNameLabel()
     var castCharacterLabel = MovieCreditCell.caseCharacterLabel()
     var padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
+    
+    private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +34,15 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieCastViewModel)
+        
+        viewModel.cast
+            .subscribe(onNext: { [unowned self] (cast) in
+                self.castNameLabel.text = cast.name
+                self.setupCaseCharacterLabel(characterString: cast.character)
+                guard let url = ApiManager.profileImageUrl(profilePath: cast.profilePath) else { return }
+                self.profileImageView.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

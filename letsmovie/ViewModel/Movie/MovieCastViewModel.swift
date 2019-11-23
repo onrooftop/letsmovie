@@ -13,7 +13,7 @@ class MovieCastViewModel: ViewModelType, CellIdentifier {
     
     static var cellIdentifier: String = "movieCastViewModel"
     
-    let cast: Observable<(String, String, String?)>
+    let cast: Observable<(character: String, name: String, profilePath: String?)>
     
     private let movieCast: MovieCast
     init(movieCast: Movie.Cast) {
