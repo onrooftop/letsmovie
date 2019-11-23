@@ -46,7 +46,7 @@ class MovieHeaderView: UICollectionReusableView, UsableViewModel {
         
         viewModel.backdropUrlString
             .subscribe(onNext: { [unowned self] (url) in
-                guard let url = ApiManager.shared.posterImageUrl(posterPath: url) else { return }
+                guard let url = ApiManager.posterImageUrl(posterPath: url, posterSize: .w780) else { return }
                 self.backdropImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)

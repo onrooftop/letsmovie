@@ -81,7 +81,7 @@ extension DiscoverPosterController {
     func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection> {
         let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! PosterCell
-            if let url = ApiManager.shared.posterImageUrl(posterPath: item.posterPath) {
+            if let url = ApiManager.posterImageUrl(posterPath: item.posterPath) {
                 cell.posterImageView.kf.setImage(with: url)
             }
             return cell

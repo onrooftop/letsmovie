@@ -21,15 +21,6 @@ class ApiManager: NetworkSession {
     static let shared = ApiManager()
     private init() {}
     
-    private let secureBaseUrl = "https://image.tmdb.org/t/p/"
-    private let posterSize = "w342"
-    
-    func posterImageUrl(posterPath: String?) -> URL? {
-        guard let posterPath = posterPath else { return nil }
-        let urlString = secureBaseUrl + posterSize + posterPath
-        return URL(string: urlString)
-    }
-    
     func request(router: Router) -> Single<Data> {
         return Single.create { (single) -> Disposable in
             
@@ -59,6 +50,20 @@ class ApiManager: NetworkSession {
         
         return self.request(router: router)
         
+    }
+}
+
+extension ApiManager {
+    private static let secureBaseUrl = "https://image.tmdb.org/t/p/"
+    
+    static func posterImageUrl(posterPath: String?, posterSize: PosterSize = .w342) -> URL? {
+        guard let posterPath = posterPath else { return nil }
+        let urlString = secureBaseUrl + posterSize.rawValue + posterPath
+        return URL(string: urlString)
+    }
+    
+    enum PosterSize: String {
+        case w342, w780, original
     }
 }
 
