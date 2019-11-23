@@ -10,7 +10,7 @@ import UIKit
 
 class MovieGenresCell: UICollectionViewCell, UsableViewModel{
     
-    let movieGenresController = MovieGenresController()
+    var movieGenresController = MovieGenresController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +26,7 @@ class MovieGenresCell: UICollectionViewCell, UsableViewModel{
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieGenreViewModel)
+        movieGenresController.bind(viewModel: viewModel)
     }
 }
 

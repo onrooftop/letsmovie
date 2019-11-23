@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MovieGenresController: UICollectionViewController, UsableViewModel {
 
@@ -14,8 +16,10 @@ class MovieGenresController: UICollectionViewController, UsableViewModel {
     private let minimumLineSpacing: CGFloat = 10
     private let contentInset: UIEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 10)
     private let cellPadding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: 12)
-    //TODO: Remove this when we have viewModel
-    let genres = ["War", "Romance", "Mystery", "Music", "Science Fiction"]
+    private let disposeBag = DisposeBag()
+    
+    var genres: [String] = []
+    
     init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
@@ -37,6 +41,25 @@ class MovieGenresController: UICollectionViewController, UsableViewModel {
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         viewModel = (bindedViewModel as? MovieGenreViewModel)
+        
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        
+        viewModel.genres
+            .subscribe(onNext: { [unowned self] (genres) in
+                self.genres = genres
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.genres
+            .bind(to: collectionView.rx.items(cellIdentifier: cellId, cellType: MovieGenreCell.self)) {(item, genre, cell) in
+                cell.genreLabel.text = genre
+            }
+            .disposed(by: disposeBag)
+
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -54,10 +77,6 @@ extension MovieGenresController: UICollectionViewDelegateFlowLayout {
         collectionView.register(MovieGenreCell.self, forCellWithReuseIdentifier: cellId)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
     }
@@ -72,12 +91,6 @@ extension MovieGenresController: UICollectionViewDelegateFlowLayout {
         let estimateCell = dummyCell.systemLayoutSizeFitting(dummySize)
         let width = estimateCell.width + cellPadding.right + cellPadding.left
         return .init(width: width, height: height)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MovieGenreCell
-        cell.genreLabel.text = genres[indexPath.item]
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
