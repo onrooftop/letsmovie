@@ -258,10 +258,8 @@
 		AE02AA64237BF90100185B47 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AE5D0007238ACEF900B880AF /* Discover */,
 				AE7F01C0238914330030F1F2 /* Movie */,
-				AEBB553723829D1400E1B957 /* DiscoverSection.swift */,
-				AEBB553B2382C1F500E1B957 /* DiscoverPoster.swift */,
-				AE7F01A42383E5FB0030F1F2 /* DiscoverPosterSection.swift */,
 				AE7F01C323894C380030F1F2 /* SectionViewModel.swift */,
 			);
 			path = Model;
@@ -281,6 +279,16 @@
 			children = (
 			);
 			path = Scene;
+			sourceTree = "<group>";
+		};
+		AE5D0007238ACEF900B880AF /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				AEBB553723829D1400E1B957 /* DiscoverSection.swift */,
+				AEBB553B2382C1F500E1B957 /* DiscoverPoster.swift */,
+				AE7F01A42383E5FB0030F1F2 /* DiscoverPosterSection.swift */,
+			);
+			path = Discover;
 			sourceTree = "<group>";
 		};
 		AE7F01A82385251D0030F1F2 /* Movie */ = {
