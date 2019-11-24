@@ -47,10 +47,13 @@ extension MovieCreditViewModel: CellIdentifier {
                 }
             
         case .crew:
-            let jobFilter = ["Director"]
+            let jobFilter = ["Director", "Producer"]
             
             return movie.credits.crew
                 .filter {jobFilter.contains($0.job)}
+                .sorted(by: { (crew1, crew2) -> Bool in
+                    return jobFilter.firstIndex(of: crew1.job)! < jobFilter.firstIndex(of: crew2.job)!
+                })
                 .map { (crew) -> MovieCreditViewModel in
                     let name = crew.name
                     let imageUrlString = crew.profilePath
