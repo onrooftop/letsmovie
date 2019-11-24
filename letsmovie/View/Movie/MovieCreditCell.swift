@@ -13,6 +13,7 @@ import Kingfisher
 
 class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     
+    var shortNameLabel = MovieCreditCell.shortNameLabel()
     var profileImageView = MovieCreditCell.profileImageView()
     var nameLabel = MovieCreditCell.nameLabel()
     var detailLabel = MovieCreditCell.detailLabel()
@@ -49,6 +50,10 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
                 self.profileImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.shortName
+            .bind(to: shortNameLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -56,6 +61,13 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
 extension MovieCreditCell {
     private func setupView() {
         backgroundColor = .white
+        
+        shortNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.addSubview(shortNameLabel)
+        NSLayoutConstraint.activate([
+            shortNameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor),
+            shortNameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor)
+        ])
         
         let profileImageSize: CGFloat = self.frame.height
         profileImageView.layer.cornerRadius = profileImageSize / 2
@@ -87,6 +99,12 @@ extension MovieCreditCell {
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
         return iv
+    }
+    
+    class func shortNameLabel() -> UILabel {
+        let lb = UILabel()
+        lb.font = .boldSystemFont(ofSize: 30)
+        return lb
     }
     
     class func nameLabel() -> UILabel {

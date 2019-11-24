@@ -12,4 +12,5 @@ struct MovieCredit {
     let name: String
     let detail: NSAttributedString
     let imageUrlString: String?
+    let shortName: String
 }

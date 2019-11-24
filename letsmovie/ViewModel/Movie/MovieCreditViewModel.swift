@@ -14,6 +14,7 @@ class MovieCreditViewModel: ViewModelType {
     let name: Observable<String>
     let detail: Observable<NSAttributedString>
     let imagePath: Observable<String>
+    let shortName: Observable<String>
     
     private let movieCredit: MovieCredit
     init(movieCredit: MovieCredit) {
@@ -22,6 +23,7 @@ class MovieCreditViewModel: ViewModelType {
         self.name = .just(self.movieCredit.name)
         self.detail = .just(self.movieCredit.detail)
         self.imagePath = .just(self.movieCredit.imageUrlString ?? "")
+        self.shortName = .just(self.movieCredit.shortName)
     }
 }
 
@@ -39,7 +41,8 @@ extension MovieCreditViewModel: CellIdentifier {
                     let imageUrlString = cast.profilePath
                     let detail = NSMutableAttributedString(string: "as ", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.lightGray])
                     detail.append(NSAttributedString(string: cast.character, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.darkGray]))
-                    let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString)
+                    let shortName = imageUrlString == nil ? toShortName(name: name) : ""
+                    let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString, shortName: shortName)
                     return MovieCreditViewModel(movieCredit: movieCredit)
                 }
             
@@ -52,9 +55,17 @@ extension MovieCreditViewModel: CellIdentifier {
                     let name = crew.name
                     let imageUrlString = crew.profilePath
                     let detail = NSAttributedString(string: crew.job, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.darkGray])
-                    let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString)
+                    let shortName = imageUrlString == nil ? toShortName(name: name) : ""
+                    let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString, shortName: shortName)
                     return MovieCreditViewModel(movieCredit: movieCredit)
                 }
         }
+    }
+    
+    class private func toShortName(name: String) -> String {
+        let names = name.split(separator: " ")
+        let firstName = Array(names[0])
+        let lastName = Array(names[1])
+        return "\(firstName[0])\(lastName[0])"
     }
 }
