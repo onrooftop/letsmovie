@@ -50,6 +50,8 @@ class MovieHeaderView: UICollectionReusableView, UsableViewModel {
                 self.backdropImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
+        
+        layoutIfNeeded()
     }
 }
 
@@ -109,11 +111,10 @@ extension MovieHeaderView {
     
     class func titleLabel() -> UILabel {
         let lb = UILabel()
-        lb.font = .boldSystemFont(ofSize: 64)
-        lb.numberOfLines = 2
+        lb.font = .boldSystemFont(ofSize: 48)
+        lb.numberOfLines = 0
         lb.lineBreakMode = .byWordWrapping
         lb.textColor = .white
-        lb.text = "Joker"
         return lb
     }
     
@@ -121,7 +122,6 @@ extension MovieHeaderView {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 24)
         lb.textColor = .white
-        lb.text = "120 min"
         return lb
     }
 }
