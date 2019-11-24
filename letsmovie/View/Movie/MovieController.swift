@@ -136,94 +136,70 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         
         collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: MovieCastViewModel.cellIdentifier)
 }
-    
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        switch indexPath.section {
-//        case 0:
-//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! MovieHeaderView
-//          return header
-//        case 1:
-//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: creditHeaderId, for: indexPath) as! MovieCreditHeader
-//            header.titleLabel.text = "Cast"
-//            return header
-//        default:
-//            let spacingHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: spacingHeaderId, for: indexPath)
-//            spacingHeader.backgroundColor = .clear
-//            return spacingHeader
-//        }
-//
-//    }
-    
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        switch indexPath.section {
-//        case 0:
-//            switch indexPath.item {
-//            case 0:
-//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: buttonsCellId, for: indexPath) as! MovieButtonsCell
-//                return cell
-//            case 1:
-//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genresCellId, for: indexPath)
-//                return cell
-//            case 2:
-//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: overviewCellId, for: indexPath) as! MovieOverviewCell
-//                cell.overviewLabel.text = overviewText
-//                return cell
-//            default:
-//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-//                cell.backgroundColor = .red
-//                return cell
-//            }
-//        default:
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: creditCellId, for: indexPath) as! MovieCreditCell
-//
-//            return cell
-//        }
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        var height: CGFloat = minimumLineSpacing
-        switch section {
-        case 0:
-            height = 400
-        case 1:
-            height = 50
-        default:
-            height = minimumLineSpacing
-        }
-        
-        return .init(width: view.frame.width, height: height)
+        let headerViewModel = viewModel.sectionsArray[section].header
+        return getHeaderSize(from: headerViewModel)
     }
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        var height: CGFloat = 50
-        switch indexPath.section {
-        case 0:
-            switch indexPath.item {
-            case 0:
-                height = 54
-            case 1:
-                height = 42
-            case 2:
-                let dummyCell = MovieOverviewCell()
-//                dummyCell.overviewLabel.text = overviewText
-                let width = view.frame.width - dummyCell.padding.left - dummyCell.padding.right
-                height = dummyCell.overviewLabel.height(width: width) + dummyCell.overviewTitleLabel.height(width: width)
-            default:
-                height = 50
-            }
-        default:
-            height = 64
-        }
-        
-        return .init(width: view.frame.width, height: height)
+        let cellViewModel = viewModel.sectionsArray[indexPath.section].items[indexPath.item]
+        return getCellSize(from: cellViewModel)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
     }
     
+}
+
+//MARK:- Size for cell
+extension MovieController {
+    
+    func getHeaderSize(from viewModel: ViewModelType) -> CGSize {
+        var height: CGFloat = 0
+        
+        switch viewModel {
+        case is MovieHeaderViewModel:
+            height = 400
+            
+        case is MovieCreditHeaderViewModel:
+            height = 50
+            
+        default:
+            height = 0
+        }
+        
+        return .init(width: view.frame.width, height: height)
+    }
+    
+    func getCellSize(from viewModel: ViewModelType) -> CGSize {
+        
+        var height: CGFloat = 0
+        
+        switch viewModel {
+
+        case is MovieButtonsViewModel:
+            height = 54
+            
+        case is MovieGenreViewModel:
+            height =  42
+            
+        case is MovieOverviewViewModel:
+            var dummyCell = MovieOverviewCell()
+            dummyCell.bind(viewModel: viewModel)
+            let width = view.frame.width - dummyCell.padding.left - dummyCell.padding.right
+            height = dummyCell.overviewLabel.height(width: width) + dummyCell.overviewTitleLabel.height(width: width)
+            
+        case is MovieCastViewModel:
+            height = 64
+            
+        default:
+            height = 0
+        }
+        
+        return .init(width: view.frame.width, height: height)
+    }
 }
 
 extension String {

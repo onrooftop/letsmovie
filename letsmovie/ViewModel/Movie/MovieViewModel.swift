@@ -11,6 +11,8 @@ import RxSwift
 
 class MovieViewModel: ViewModelType {
     
+    private(set) var sectionsArray: [SectionViewModel]
+    
     private let sections: BehaviorSubject<[SectionViewModel]>
     public var sectionViewModels: Observable<[SectionViewModel]> {
         return sections
@@ -24,6 +26,7 @@ class MovieViewModel: ViewModelType {
         self.id = id
         self.disposeBag = DisposeBag()
         self.sections = BehaviorSubject<[SectionViewModel]>(value: [])
+        self.sectionsArray = []
         
         self.service.request(router: .movie(id: "\(self.id)", appendToResponses: [.credits]))
             .map{ try? JSONDecoder().decode(Movie.self, from: $0) }
@@ -44,10 +47,12 @@ class MovieViewModel: ViewModelType {
                 let movieCastViewModels = MovieCastViewModel.from(movie: movie)
                 castSection = SectionViewModel(header: movieCreditHeaderViewModel, items: movieCastViewModels)
                 
-                self.sections.onNext([
+                self.sectionsArray = [
                     detailSection,
                     castSection
-                ])
+                ]
+                
+                self.sections.onNext(self.sectionsArray)
             })
             .disposed(by: disposeBag)
     }
