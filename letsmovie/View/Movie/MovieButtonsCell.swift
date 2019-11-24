@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieButtonsCell: UICollectionViewCell {
+class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
     
     var horizontalStackView = MovieButtonsCell.horizontalStackView()
     var watchlistButton = MovieButtonsCell.createButton(title: "Watchlist")
@@ -32,6 +32,13 @@ class MovieButtonsCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MovieButtonsViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MovieButtonsViewModel)
+        
     }
 
 }

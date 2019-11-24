@@ -34,9 +34,10 @@ class MovieViewModel: ViewModelType {
                 
                 //MARK: Detail Section
                 let movieHeaderViewModel = MovieHeaderViewModel(movie: movie)
+                let movieButtonsViewModel = MovieButtonsViewModel()
                 let movieGenreViewModel = MovieGenreViewModel(movie: movie)
                 let movieOverviewVieModel = MovieOverviewViewModel(movie: movie)
-                detailSection = SectionViewModel(header: movieHeaderViewModel, items: [movieGenreViewModel, movieOverviewVieModel])
+                detailSection = SectionViewModel(header: movieHeaderViewModel, items: [movieButtonsViewModel, movieGenreViewModel, movieOverviewVieModel])
                 
                 //MARK: Cast Section
                 let movieCreditHeaderViewModel = MovieCreditHeaderViewModel(creditType: .cast)

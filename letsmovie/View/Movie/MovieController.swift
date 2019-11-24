@@ -12,7 +12,6 @@ import RxDataSources
 import RxCocoa
 
 class MovieController: UICollectionViewController, UsableViewModel {
-    private let buttonsCellId = "buttonsCellId"
     private let minimumLineSpacing: CGFloat = 10
     private let disposeBag = DisposeBag()
     
@@ -112,6 +111,9 @@ extension MovieController {
         case is MovieCastViewModel:
             return MovieCastViewModel.cellIdentifier
             
+        case is MovieButtonsViewModel:
+            return MovieButtonsViewModel.cellIdentifier
+            
         default:
             return ""
         }
@@ -124,7 +126,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         
         collectionView.register(MovieHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieHeaderViewModel.cellIdentifier)
         
-        collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: buttonsCellId)
+        collectionView.register(MovieButtonsCell.self, forCellWithReuseIdentifier: MovieButtonsViewModel.cellIdentifier)
 
         collectionView.register(MovieGenresCell.self, forCellWithReuseIdentifier: MovieGenreViewModel.cellIdentifier)
         
