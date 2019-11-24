@@ -20,6 +20,7 @@ class MovieCastViewModel: ViewModelType, CellIdentifier {
         self.movieCast = MovieCast(movieCast: movieCast)
         
         cast = .just((character: self.movieCast.character, name: self.movieCast.name, profilePath: self.movieCast.profilePath))
+
     }
 }
 

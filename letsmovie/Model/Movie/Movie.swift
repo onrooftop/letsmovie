@@ -27,6 +27,7 @@ struct Movie: Decodable {
     
     struct Credits: Decodable {
         let cast: [Cast]
+        let crew: [Crew]
     }
     
     struct Cast: Decodable {
@@ -36,6 +37,17 @@ struct Movie: Decodable {
         
         enum CodingKeys: String, CodingKey {
             case character, name
+            case profilePath = "profile_path"
+        }
+    }
+    
+    struct Crew: Decodable {
+        let name: String
+        let job: String
+        let profilePath: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case name, job
             case profilePath = "profile_path"
         }
     }

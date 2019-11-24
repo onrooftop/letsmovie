@@ -34,7 +34,7 @@ class MovieViewModel: ViewModelType {
                 guard let movie = movie else { return }
                 var detailSection: SectionViewModel
                 var castSection: SectionViewModel
-                
+                var crewSection: SectionViewModel
                 //MARK: Detail Section
                 let movieHeaderViewModel = MovieHeaderViewModel(movie: movie)
                 let movieButtonsViewModel = MovieButtonsViewModel()
@@ -42,13 +42,18 @@ class MovieViewModel: ViewModelType {
                 let movieOverviewVieModel = MovieOverviewViewModel(movie: movie)
                 detailSection = SectionViewModel(header: movieHeaderViewModel, items: [movieButtonsViewModel, movieGenreViewModel, movieOverviewVieModel])
                 
+                //MARK: Crew Section
+                let movieCrewHeaderViewModel = MovieCreditHeaderViewModel(creditType: .crew)
+                let movieCrewViewModels = MovieCreditViewModel.from(movie: movie, creditType: .crew)
+                crewSection = SectionViewModel(header: movieCrewHeaderViewModel, items: movieCrewViewModels)
                 //MARK: Cast Section
-                let movieCreditHeaderViewModel = MovieCreditHeaderViewModel(creditType: .cast)
-                let movieCastViewModels = MovieCastViewModel.from(movie: movie)
-                castSection = SectionViewModel(header: movieCreditHeaderViewModel, items: movieCastViewModels)
+                let movieCastHeaderViewModel = MovieCreditHeaderViewModel(creditType: .cast)
+                let movieCastViewModels = MovieCreditViewModel.from(movie: movie, creditType: .cast)
+                castSection = SectionViewModel(header: movieCastHeaderViewModel, items: movieCastViewModels)
                 
                 self.sectionsArray = [
                     detailSection,
+                    crewSection,
                     castSection
                 ]
                 

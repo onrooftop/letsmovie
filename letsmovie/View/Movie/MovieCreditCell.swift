@@ -14,8 +14,8 @@ import Kingfisher
 class MovieCreditCell: UICollectionViewCell, UsableViewModel {
     
     var profileImageView = MovieCreditCell.profileImageView()
-    var castNameLabel = MovieCreditCell.castNameLabel()
-    var castCharacterLabel = MovieCreditCell.caseCharacterLabel()
+    var nameLabel = MovieCreditCell.nameLabel()
+    var detailLabel = MovieCreditCell.detailLabel()
     var padding: UIEdgeInsets = .init(top: 0, left: 12, bottom: 0, right: -12)
     
     private let disposeBag = DisposeBag()
@@ -30,16 +30,22 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var viewModel: MovieCastViewModel!
+    var viewModel: MovieCreditViewModel!
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
-        viewModel = (bindedViewModel as? MovieCastViewModel)
+        viewModel = (bindedViewModel as? MovieCreditViewModel)
         
-        viewModel.cast
-            .subscribe(onNext: { [unowned self] (cast) in
-                self.castNameLabel.text = cast.name
-                self.setupCaseCharacterLabel(characterString: cast.character)
-                guard let url = ApiManager.profileImageUrl(profilePath: cast.profilePath) else { return }
+        viewModel.name
+            .bind(to: nameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.detail
+            .bind(to: detailLabel.rx.attributedText)
+            .disposed(by: disposeBag)
+        
+        viewModel.imagePath
+            .subscribe(onNext: { [unowned self] (urlString) in
+                guard let url = ApiManager.profileImageUrl(profilePath: urlString) else { return }
                 self.profileImageView.kf.setImage(with: url)
             })
             .disposed(by: disposeBag)
@@ -62,7 +68,7 @@ extension MovieCreditCell {
             profileImageView.heightAnchor.constraint(equalToConstant: profileImageSize)
         ])
         
-        let verticalStackView = UIStackView(arrangedSubviews: [UIView(), castNameLabel, castCharacterLabel, UIView()])
+        let verticalStackView = UIStackView(arrangedSubviews: [UIView(), nameLabel, detailLabel, UIView()])
         verticalStackView.axis = .vertical
         verticalStackView.distribution = .equalCentering
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,10 +79,6 @@ extension MovieCreditCell {
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: padding.right),
             verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
-        //TODO: Remove this when we have viewModel
-        castNameLabel.text = "Joaquin Phoenix"
-        setupCaseCharacterLabel(characterString: "Arthur Fleck / Joker")
     }
     
     class func profileImageView() -> UIImageView {
@@ -87,20 +89,14 @@ extension MovieCreditCell {
         return iv
     }
     
-    class func castNameLabel() -> UILabel {
+    class func nameLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 18)
         return lb
     }
     
-    class func caseCharacterLabel() -> UILabel {
+    class func detailLabel() -> UILabel {
         let lb = UILabel()
         return lb
-    }
-    
-    func setupCaseCharacterLabel(characterString: String) {
-        let attributeText = NSMutableAttributedString(string: "as ", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.lightGray])
-        attributeText.append(NSAttributedString(string: characterString, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.darkGray]))
-        castCharacterLabel.attributedText = attributeText
     }
 }

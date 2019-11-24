@@ -108,8 +108,8 @@ extension MovieController {
         case is MovieCreditHeaderViewModel:
             return MovieCreditHeaderViewModel.cellIdentifier
             
-        case is MovieCastViewModel:
-            return MovieCastViewModel.cellIdentifier
+        case is MovieCreditViewModel:
+            return MovieCreditViewModel.cellIdentifier
             
         case is MovieButtonsViewModel:
             return MovieButtonsViewModel.cellIdentifier
@@ -134,7 +134,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
         
         collectionView.register(MovieCreditHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieCreditHeaderViewModel.cellIdentifier)
         
-        collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: MovieCastViewModel.cellIdentifier)
+        collectionView.register(MovieCreditCell.self, forCellWithReuseIdentifier: MovieCreditViewModel.cellIdentifier)
 }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -191,7 +191,7 @@ extension MovieController {
             let width = view.frame.width - dummyCell.padding.left - dummyCell.padding.right
             height = dummyCell.overviewLabel.height(width: width) + dummyCell.overviewTitleLabel.height(width: width)
             
-        case is MovieCastViewModel:
+        case is MovieCreditViewModel:
             height = 64
             
         default:
