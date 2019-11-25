@@ -13,8 +13,7 @@ import Kingfisher
 import RxDataSources
 
 class DiscoverSeeAllController: UICollectionViewController, UsableViewModel {
-    
-    private let cellId = "cellId"
+
     private let footerId = "footId"
     private let paddingInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
     private let padding: CGFloat = 10
@@ -87,19 +86,20 @@ extension DiscoverSeeAllController {
 
 //MARK:- RxDataSource
 extension DiscoverSeeAllController {
-    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection> {
-        let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! PosterCell
-            if let url = ApiManager.posterImageUrl(posterPath: item.posterPath) {
-                cell.posterImageView.kf.setImage(with: url)
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>( configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterViewModel.cellIdentifier, for: indexPath)
+            
+            if var cell = cell as? ViewModelBindableType {
+                cell.bind(viewModel: viewModel)
             }
+            
             return cell
         })
         
         dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.footerId, for: indexPath) as! SeeAllFooter
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.footerId, for: indexPath)
             self.viewModel.loadMoreData.onNext(())
-            
             return footer
         }
         
@@ -110,7 +110,7 @@ extension DiscoverSeeAllController {
 //MARK:- CollectionView Delegate
 extension DiscoverSeeAllController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterViewModel.cellIdentifier)
         collectionView.register(SeeAllFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
     }
     

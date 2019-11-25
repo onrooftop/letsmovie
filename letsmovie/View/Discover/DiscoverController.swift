@@ -19,7 +19,7 @@ class DiscoverController: UICollectionViewController, UsableViewModel {
     
     private let disposeBag = DisposeBag()
     
-    var dataSource: RxCollectionViewSectionedReloadDataSource<DiscoverSection>!
+    var dataSource: RxCollectionViewSectionedReloadDataSource<SectionViewModel>!
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -50,22 +50,31 @@ class DiscoverController: UICollectionViewController, UsableViewModel {
         
         dataSource = createDataSource()
 
-        viewModel.discoverSections
+        viewModel.sectionViewModels
             .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.movieViewModel
+            .subscribe(onNext: { [unowned self] (movieViewModel) in
+                var movieVC = MovieController()
+                movieVC.hidesBottomBarWhenPushed = true
+                movieVC.bind(viewModel: movieViewModel)
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.seeAllViewModel
+            .subscribe(onNext: { [unowned self] (dicoverPosterViewModel) in
+                var seeAllVC = DiscoverSeeAllController()
+                seeAllVC.bind(viewModel: dicoverPosterViewModel)
+                self.navigationController?.pushViewController(seeAllVC, animated: true)
+            })
             .disposed(by: disposeBag)
         
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
-        
-        viewModel.seeAllViewModel
-            .subscribe(onNext: { (viewModel) in
-                var discoverSeeAllVC = DiscoverSeeAllController()
-                discoverSeeAllVC.bind(viewModel: viewModel)
-                discoverSeeAllVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(discoverSeeAllVC, animated: true)
-            })
-            .disposed(by: disposeBag)
+
     }
 }
 
@@ -86,19 +95,22 @@ extension DiscoverController {
 //MARK:- RxDatasources
 
 extension DiscoverController {
-    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverSection> {
-        let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! DiscoverCell
-            cell.delegate = self
-            cell.discoverType = item
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>( configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoverPosterViewModel.cellIdentifier, for: indexPath)
+            if var cell = cell as? ViewModelBindableType {
+                cell.bind(viewModel: viewModel)
+            }
             return cell
         })
         
         dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.headerId, for: indexPath) as! DiscoverHeader
-            let headerTitle = dataSource.sectionModels[indexPath.section].header
-            header.titleLabel.text = headerTitle
-            header.seeAllButton.rx.action = self.viewModel.performSeeAll(section: indexPath.section)
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DiscoverHeaderViewModel.cellIdentifier, for: indexPath)
+            let viewModel = dataSource.sectionModels[indexPath.section].header!
+            if var header = header as? ViewModelBindableType {
+                header.bind(viewModel: viewModel)
+            }
+//            header.seeAllButton.rx.action = self.viewModel.performSeeAll(section: indexPath.section)
             return header
         }
         
@@ -109,8 +121,8 @@ extension DiscoverController {
 //MARK:- CollectionView Delegate and Datasource
 extension DiscoverController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
-        collectionView.register(DiscoverCell.self, forCellWithReuseIdentifier: self.cellId)
-        collectionView.register(DiscoverHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: self.headerId)
+        collectionView.register(DiscoverCell.self, forCellWithReuseIdentifier: DiscoverPosterViewModel.cellIdentifier)
+        collectionView.register(DiscoverHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DiscoverHeaderViewModel.cellIdentifier)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -131,12 +143,12 @@ extension DiscoverController: UICollectionViewDelegateFlowLayout {
 }
 
 //MARK:- Poster Delegate
-extension DiscoverController: PosterDelegate {
-    func didSelectItem(with id: Int) {
-        let viewModel = MovieViewModel(id: id, service: ApiManager.shared)
-        var movieVC = MovieController()
-        movieVC.bind(viewModel: viewModel)
-        movieVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(movieVC, animated: true)
-    }
-}
+//extension DiscoverController: PosterDelegate {
+//    func didSelectItem(with id: Int) {
+//        let viewModel = MovieViewModel(id: id, service: ApiManager.shared)
+//        var movieVC = MovieController()
+//        movieVC.bind(viewModel: viewModel)
+//        movieVC.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(movieVC, animated: true)
+//    }
+//}

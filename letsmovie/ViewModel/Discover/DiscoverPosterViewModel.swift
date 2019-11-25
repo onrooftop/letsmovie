@@ -8,51 +8,49 @@
 
 import Foundation
 import RxSwift
+import Action
 
-class DiscoverPosterViewModel: ViewModelType{
+class DiscoverPosterViewModel: ViewModelType, CellIdentifier {
+    static var cellIdentifier: String = "DiscoverPosterViewModel"
+    
     //MARK: Input
     let discoverType: DiscoverType
     let loadMoreData: PublishSubject<Void>
     let selectedItem: PublishSubject<IndexPath>
-    
+
     //MARK: Output
-    let selectedId: Observable<Int>
     let cannotLoadMore: Observable<Bool>
     let title: Observable<String>
-    var sections: Observable<[DiscoverPosterSection]> {
-        return posters
+    var sections: Observable<[SectionViewModel]> {
+        return posters.asObserver()
     }
     
-    private let posters: PublishSubject<[DiscoverPosterSection]>
+    private let posters: ReplaySubject<[SectionViewModel]>
     private let pageNumber: BehaviorSubject<Int>
     private let disposeBag = DisposeBag()
     private let service: NetworkSession
-    private var discoverPosters: [DiscoverPoster] = []
     private var discoverResults: [DiscoverResult] = []
+    private var posterViewModels: [PosterViewModel] = []
     private var currentPage = 1
     private let totalPage: PublishSubject<Int>
     private let isFetching: Observable<Bool>
     private let fetchData: Observable<Data>
     
-    init(networkSession: NetworkSession, discoverType: DiscoverType) {
+    private let performMovie: Action<Int, Void>?
+    init(networkSession: NetworkSession, discoverType: DiscoverType, performMovie: Action<Int, Void>? = nil) {
         self.service = networkSession
-        
         self.discoverType = discoverType
-        loadMoreData = PublishSubject<Void>()
+        self.loadMoreData = PublishSubject<Void>()
         self.title = Observable.just(discoverType.rawValue)
         self.selectedItem = PublishSubject<IndexPath>()
-        
-        posters = PublishSubject<[DiscoverPosterSection]>()
-        pageNumber = BehaviorSubject(value: 1)
-        totalPage = PublishSubject<Int>()
-        
-        selectedId = Observable.combineLatest(
-                selectedItem, posters
-            )
-            .map{ $1[$0.section].items[$0.item].id }
+        self.posters = ReplaySubject<[SectionViewModel]>.create(bufferSize: 1)
+        self.pageNumber = BehaviorSubject(value: 1)
+        self.totalPage = PublishSubject<Int>()
+        self.performMovie = performMovie
         
         fetchData = pageNumber.asObserver()
             .flatMap { networkSession.request(discoverType: discoverType, page: $0) }
+            .share(replay: 1, scope: .whileConnected)
         
         isFetching = Observable.merge(
             pageNumber.map { _ in true },
@@ -67,12 +65,15 @@ class DiscoverPosterViewModel: ViewModelType{
         
         fetchData
             .map{ try? JSONDecoder().decode(DiscoverPoster.self, from: $0) }
-            .filter{ $0 != nil }
+            .subscribeOn(MainScheduler.instance)
             .subscribe(onNext: { [unowned self] (discoverPoster) in
-                self.discoverPosters.append(discoverPoster!)
-                self.discoverResults += discoverPoster!.results
-                self.totalPage.onNext(discoverPoster!.totalPages)
-                self.posters.onNext([DiscoverPosterSection(header: "", items: self.discoverResults)])
+                guard let discoverPoster = discoverPoster else { return }
+                self.discoverResults += discoverPoster.results
+                self.posterViewModels += discoverPoster.results.map{ PosterViewModel(id: $0.id, urlString: $0.posterPath)}
+                self.totalPage.onNext(discoverPoster.totalPages)
+                self.posters.onNext([
+                    SectionViewModel(header: nil, items: self.posterViewModels)
+                ])
             })
             .disposed(by: disposeBag)
   
@@ -87,6 +88,13 @@ class DiscoverPosterViewModel: ViewModelType{
             self.currentPage = page
         })
         .disposed(by: disposeBag)
-
     }
+    
+    lazy var movieAction: Action<IndexPath, Void> = {
+        return Action<IndexPath, Void> { indexPath in
+            let id = self.discoverResults[indexPath.item].id
+            self.performMovie?.execute(id)
+            return .empty()
+        }
+    }()
 }

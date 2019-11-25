@@ -10,7 +10,7 @@ import Foundation
 import RxDataSources
 
 struct SectionViewModel {
-    var header: ViewModelType
+    var header: ViewModelType?
     var items: [ViewModelType]
 }
 

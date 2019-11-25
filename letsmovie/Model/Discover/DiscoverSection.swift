@@ -14,7 +14,7 @@ enum DiscoverType: String {
 }
 
 struct DiscoverSection {
-    var header: String
+    var header: ViewModelType
     var items: [DiscoverType]
 }
 

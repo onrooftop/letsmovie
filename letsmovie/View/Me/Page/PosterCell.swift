@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
-class PosterCell: UICollectionViewCell {
+class PosterCell: UICollectionViewCell, UsableViewModel {
     
     var posterImageView = PosterCell.posterImageView()
-    
+    private let disposeBag = DisposeBag()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -20,6 +23,19 @@ class PosterCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: PosterViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? PosterViewModel)
+        
+        viewModel.urlString
+            .subscribe(onNext: { [unowned self] (urlString) in
+                guard let url = ApiManager.posterImageUrl(posterPath: urlString, posterSize: .w342) else { return }
+                self.posterImageView.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

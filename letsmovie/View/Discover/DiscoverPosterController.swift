@@ -12,15 +12,10 @@ import RxCocoa
 import RxDataSources
 import Kingfisher
 
-protocol PosterDelegate: class {
-    func didSelectItem(with id: Int)
-}
-
 class DiscoverPosterController: UICollectionViewController, UsableViewModel {
     
-    private let cellId = "cellId"
     private let disposeBag = DisposeBag()
-    weak var delegate: PosterDelegate?
+    
     init() {
         let layout = SnappingHorizontalFlowLayout()
         super.init(collectionViewLayout: layout)
@@ -52,19 +47,13 @@ class DiscoverPosterController: UICollectionViewController, UsableViewModel {
         viewModel.sections
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        viewModel.selectedId
-            .subscribe(onNext: { (id) in
-                self.delegate?.didSelectItem(with: id)
-            })
-            .disposed(by: disposeBag)
-        
+    
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
         
         collectionView.rx.itemSelected
-            .bind(to: viewModel.selectedItem)
+            .bind(to: viewModel.movieAction.inputs)
             .disposed(by: disposeBag)
     }
 }
@@ -78,12 +67,14 @@ extension DiscoverPosterController {
 
 //MARK:- RxDataSource
 extension DiscoverPosterController {
-    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection> {
-        let dataSource = RxCollectionViewSectionedReloadDataSource<DiscoverPosterSection>( configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellId, for: indexPath) as! PosterCell
-            if let url = ApiManager.posterImageUrl(posterPath: item.posterPath) {
-                cell.posterImageView.kf.setImage(with: url)
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>( configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterViewModel.cellIdentifier, for: indexPath)
+            
+            if var cell = cell as? ViewModelBindableType {
+                cell.bind(viewModel: viewModel)
             }
+            
             return cell
         })
         return dataSource
@@ -93,7 +84,7 @@ extension DiscoverPosterController {
 //MARK:- CollectionView Delegate and Datasource
 extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionView() {
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterViewModel.cellIdentifier)
         collectionView.contentInset = .init(top: 0, left: 10, bottom: 0, right: 100)
         collectionView.showsHorizontalScrollIndicator = false
     }

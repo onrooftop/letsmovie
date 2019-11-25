@@ -83,7 +83,7 @@ extension MovieController {
         })
         
         dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) -> UICollectionReusableView in
-            let viewModel = dataSource.sectionModels[indexPath.section].header
+            let viewModel = dataSource.sectionModels[indexPath.section].header!
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: self.getIdentifier(from: viewModel), for: indexPath)
             if var header = header as? ViewModelBindableType {
                 header.bind(viewModel: viewModel)
@@ -138,7 +138,7 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
 }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let headerViewModel = viewModel.sectionsArray[section].header
+        let headerViewModel = viewModel.sectionsArray[section].header!
         return getHeaderSize(from: headerViewModel)
     }
     

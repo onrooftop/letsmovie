@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class DiscoverHeader: UICollectionReusableView {
+class DiscoverHeader: UICollectionReusableView, UsableViewModel {
     
     private var horizontalStackView = DiscoverHeader.horizontalStackView()
     var titleLabel = DiscoverHeader.titleLabel()
@@ -16,6 +18,7 @@ class DiscoverHeader: UICollectionReusableView {
     
     private let padding: CGFloat = 16
     
+    private let disposeBag = DisposeBag()
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -24,6 +27,18 @@ class DiscoverHeader: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: DiscoverHeaderViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? DiscoverHeaderViewModel)
+        
+        viewModel.title
+            .drive(titleLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        seeAllButton.rx.action = viewModel.seeAllAction
     }
 }
 

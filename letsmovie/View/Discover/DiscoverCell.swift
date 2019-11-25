@@ -8,17 +8,9 @@
 
 import UIKit
 
-class DiscoverCell: UICollectionViewCell {
+class DiscoverCell: UICollectionViewCell, UsableViewModel {
     
-    weak var delegate: PosterDelegate?
     var discoverPosterController = DiscoverPosterController()
-    var discoverType: DiscoverType! {
-        didSet {
-            let discoverPosterViewModel = DiscoverPosterViewModel(networkSession: ApiManager.shared, discoverType: discoverType)
-            discoverPosterController.bind(viewModel: discoverPosterViewModel)
-            discoverPosterController.delegate = self
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,10 +22,11 @@ class DiscoverCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-extension DiscoverCell: PosterDelegate {
-    func didSelectItem(with id: Int) {
-        delegate?.didSelectItem(with: id)
+    
+    var viewModel: DiscoverPosterViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        discoverPosterController.bind(viewModel: bindedViewModel)
     }
 }
 
