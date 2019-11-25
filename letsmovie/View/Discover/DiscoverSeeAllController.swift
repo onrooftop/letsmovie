@@ -70,6 +70,10 @@ class DiscoverSeeAllController: UICollectionViewController, UsableViewModel {
             })
             .disposed(by: disposeBag)
         
+        collectionView.rx.itemSelected
+            .bind(to: viewModel.movieAction.inputs)
+            .disposed(by: disposeBag)
+        
     }
 }
 

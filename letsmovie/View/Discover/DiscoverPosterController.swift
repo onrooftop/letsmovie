@@ -14,13 +14,14 @@ import Kingfisher
 
 class DiscoverPosterController: UICollectionViewController, UsableViewModel {
     
-    private let disposeBag = DisposeBag()
+    var disposeBag: DisposeBag = DisposeBag()
     
     init() {
         let layout = SnappingHorizontalFlowLayout()
         super.init(collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
         collectionView.decelerationRate = .fast
+        
     }
     
     required init?(coder: NSCoder) {

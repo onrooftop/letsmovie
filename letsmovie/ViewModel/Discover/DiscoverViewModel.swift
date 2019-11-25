@@ -31,7 +31,7 @@ class DiscoverViewModel: ViewModelType {
     private let service: NetworkSession
     private(set) var sections: [SectionViewModel]
     
-    private var performMovie: Action<Int, Void>?
+    private var performMovie: Action<MovieViewModel, Void>?
     private var performSeeAll: Action<DiscoverType, Void>?
 
     init(service: NetworkSession) {
@@ -41,13 +41,13 @@ class DiscoverViewModel: ViewModelType {
         self.viewModels = ReplaySubject<[SectionViewModel]>.create(bufferSize: 1)
         self.movie = PublishSubject<MovieViewModel>()
         
-        self.performMovie = Action<Int, Void>(workFactory: { (id) -> Observable<Void> in
-            self.movie.onNext(MovieViewModel(id: id, service: service))
+        self.performMovie = Action<MovieViewModel, Void>(workFactory: { (movieViewModel) -> Observable<Void> in
+            self.movie.onNext(movieViewModel)
             return .empty()
         })
         
         self.performSeeAll = Action<DiscoverType, Void>(workFactory: { (dicoverType) -> Observable<Void> in
-            self.seeAll.onNext(DiscoverPosterViewModel(networkSession: service, discoverType: dicoverType))
+            self.seeAll.onNext(DiscoverPosterViewModel(networkSession: service, discoverType: dicoverType, performMovie: self.performMovie))
             return .empty()
         })
 

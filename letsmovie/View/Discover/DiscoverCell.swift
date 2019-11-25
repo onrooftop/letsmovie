@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import RxSwift
 
 class DiscoverCell: UICollectionViewCell, UsableViewModel {
     
-    var discoverPosterController = DiscoverPosterController()
+    var discoverPosterController: DiscoverPosterController
     
     override init(frame: CGRect) {
+        self.discoverPosterController = DiscoverPosterController()
+
         super.init(frame: frame)
-    
+
         setupView()
         setupUIElements()
     }
@@ -27,6 +30,11 @@ class DiscoverCell: UICollectionViewCell, UsableViewModel {
     var bindedViewModel: ViewModelType!
     func bindViewModel() {
         discoverPosterController.bind(viewModel: bindedViewModel)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        discoverPosterController.disposeBag = DisposeBag()
     }
 }
 

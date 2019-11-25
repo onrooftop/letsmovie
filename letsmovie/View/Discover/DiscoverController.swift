@@ -76,6 +76,7 @@ class DiscoverController: UICollectionViewController, UsableViewModel {
             .disposed(by: disposeBag)
 
     }
+
 }
 
 
@@ -93,7 +94,6 @@ extension DiscoverController {
 }
 
 //MARK:- RxDatasources
-
 extension DiscoverController {
     func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>( configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
@@ -110,7 +110,6 @@ extension DiscoverController {
             if var header = header as? ViewModelBindableType {
                 header.bind(viewModel: viewModel)
             }
-//            header.seeAllButton.rx.action = self.viewModel.performSeeAll(section: indexPath.section)
             return header
         }
         
@@ -141,14 +140,3 @@ extension DiscoverController: UICollectionViewDelegateFlowLayout {
         return .init(top: 0, left: 0, bottom: 10, right: 0)
     }
 }
-
-//MARK:- Poster Delegate
-//extension DiscoverController: PosterDelegate {
-//    func didSelectItem(with id: Int) {
-//        let viewModel = MovieViewModel(id: id, service: ApiManager.shared)
-//        var movieVC = MovieController()
-//        movieVC.bind(viewModel: viewModel)
-//        movieVC.hidesBottomBarWhenPushed = true
-//        navigationController?.pushViewController(movieVC, animated: true)
-//    }
-//}

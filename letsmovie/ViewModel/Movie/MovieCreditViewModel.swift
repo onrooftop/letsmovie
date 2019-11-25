@@ -66,9 +66,16 @@ extension MovieCreditViewModel: CellIdentifier {
     }
     
     class private func toShortName(name: String) -> String {
+        var firstName: [Character] = [" "]
+        var lastName: [Character] = [" "]
         let names = name.split(separator: " ")
-        let firstName = Array(names[0])
-        let lastName = Array(names[1])
+        if names.count > 1 {
+            firstName = Array(names[0])
+        }
+        if names.count > 2 {
+            lastName = Array(names[1])
+        }
+         
         return "\(firstName[0])\(lastName[0])"
     }
 }

@@ -36,8 +36,8 @@ class DiscoverPosterViewModel: ViewModelType, CellIdentifier {
     private let isFetching: Observable<Bool>
     private let fetchData: Observable<Data>
     
-    private let performMovie: Action<Int, Void>?
-    init(networkSession: NetworkSession, discoverType: DiscoverType, performMovie: Action<Int, Void>? = nil) {
+    private let performMovie: Action<MovieViewModel, Void>?
+    init(networkSession: NetworkSession, discoverType: DiscoverType, performMovie: Action<MovieViewModel, Void>? = nil) {
         self.service = networkSession
         self.discoverType = discoverType
         self.loadMoreData = PublishSubject<Void>()
@@ -93,7 +93,7 @@ class DiscoverPosterViewModel: ViewModelType, CellIdentifier {
     lazy var movieAction: Action<IndexPath, Void> = {
         return Action<IndexPath, Void> { indexPath in
             let id = self.discoverResults[indexPath.item].id
-            self.performMovie?.execute(id)
+            self.performMovie?.execute(MovieViewModel(id: id, service: self.service))
             return .empty()
         }
     }()
