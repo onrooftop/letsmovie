@@ -100,14 +100,14 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             return
         }
 
-        UIView.animate(withDuration: 0.85) {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.watchedButton.alpha = watchedButtonAlpha
             self.watchlistButton.alpha = watchlistButtonAlpha
-        }
+        }, completion: nil)
         
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.layoutIfNeeded()
-        }
+        }, completion: nil)
     }
 
 }
