@@ -69,10 +69,11 @@ extension MovieCreditViewModel: CellIdentifier {
         var firstName: [Character] = [" "]
         var lastName: [Character] = [" "]
         let names = name.split(separator: " ")
-        if names.count > 1 {
+
+        if names.count > 0 {
             firstName = Array(names[0])
         }
-        if names.count > 2 {
+        if names.count > 1 {
             lastName = Array(names[1])
         }
          
