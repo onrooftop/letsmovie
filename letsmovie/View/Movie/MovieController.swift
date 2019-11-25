@@ -183,7 +183,10 @@ extension MovieController {
             height = 54
             
         case is MovieGenreViewModel:
-            height =  42
+            var dummyCell = MovieGenresController()
+            dummyCell.bind(viewModel: viewModel)
+            dummyCell.view.layoutIfNeeded()
+            height = dummyCell.collectionView.contentSize.height
             
         case is MovieOverviewViewModel:
             var dummyCell = MovieOverviewCell()

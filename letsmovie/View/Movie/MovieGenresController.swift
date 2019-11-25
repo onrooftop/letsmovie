@@ -23,7 +23,7 @@ class MovieGenresController: UICollectionViewController, UsableViewModel {
     init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
     }
     
     required init?(coder: NSCoder) {
@@ -67,7 +67,7 @@ class MovieGenresController: UICollectionViewController, UsableViewModel {
 extension MovieGenresController {
     private func setupView() {
         collectionView.backgroundColor = .white
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
     }
 }
 
@@ -83,7 +83,7 @@ extension MovieGenresController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let height = view.frame.height
+        let height: CGFloat = 42
         let dummySize = CGSize(width: 100, height: 100)
         let dummyCell = MovieGenreCell()
         dummyCell.genreLabel.text = genres[indexPath.item]
