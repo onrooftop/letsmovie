@@ -61,27 +61,48 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
     
     private var rightSpaceWidthConstraint: NSLayoutConstraint!
     private var watchlistTrailingConstraint: NSLayoutConstraint!
+    private var watchedTrailingConstraint: NSLayoutConstraint!
     
     private func buttonsAnimate(buttonStatus: ButtonStatus) {
-        print(buttonStatus)
-        
+
+        var watchedButtonAlpha: CGFloat = 1
+        var watchlistButtonAlpha: CGFloat = 1
         //Watchlist Full Screen
         if !buttonStatus.isWatchlistHidden && buttonStatus.isWatchedHidden {
             rightSpaceWidthConstraint.constant = 0
             watchlistTrailingConstraint.constant = stackViewPadding.right
+            watchedTrailingConstraint.constant = -stackViewPadding.right
+            watchedButtonAlpha = 0
+            watchlistButtonAlpha = 1
         }
+        //Watched Full Screen
         else if buttonStatus.isWatchlistHidden && !buttonStatus.isWatchedHidden {
             rightSpaceWidthConstraint.constant = frame.width
             watchlistTrailingConstraint.constant = -stackViewPadding.right
+            watchedTrailingConstraint.constant = stackViewPadding.right
+            
+            watchedButtonAlpha = 1
+            watchlistButtonAlpha = 0
         }
         // show both
         else {
-           rightSpaceWidthConstraint.constant = halfWidth
+            rightSpaceWidthConstraint.constant = halfWidth
             watchlistTrailingConstraint.constant = stackViewPadding.right
+            watchedTrailingConstraint.constant = stackViewPadding.right
+            
+            watchedButtonAlpha = 1
+            watchlistButtonAlpha = 1
         }
         
         if !buttonStatus.shouldAnimate {
+            self.watchedButton.alpha = watchedButtonAlpha
+            self.watchlistButton.alpha = watchlistButtonAlpha
             return
+        }
+
+        UIView.animate(withDuration: 0.85) {
+            self.watchedButton.alpha = watchedButtonAlpha
+            self.watchlistButton.alpha = watchlistButtonAlpha
         }
         
         UIView.animate(withDuration: 1) {
@@ -121,6 +142,8 @@ extension MovieButtonsCell {
         
         watchlistTrailingConstraint = watchlistButton.rightAnchor.constraint(equalTo: rightSpaceView.leftAnchor, constant: stackViewPadding.right)
         
+        watchedTrailingConstraint = watchedButton.trailingAnchor.constraint(equalTo: rightSpaceView.trailingAnchor, constant: stackViewPadding.right)
+        
         NSLayoutConstraint.activate([
             watchlistButton.heightAnchor.constraint(equalToConstant: buttonHeight),
             watchlistButton.topAnchor.constraint(equalTo: topAnchor, constant: minimunLineSpacing),
@@ -130,7 +153,7 @@ extension MovieButtonsCell {
             watchedButton.heightAnchor.constraint(equalToConstant: buttonHeight),
             watchedButton.topAnchor.constraint(equalTo: rightSpaceView.topAnchor, constant: minimunLineSpacing),
             watchedButton.leftAnchor.constraint(equalTo: rightSpaceView.leftAnchor, constant: stackViewPadding.left),
-            watchedButton.rightAnchor.constraint(equalTo: rightSpaceView.rightAnchor, constant: stackViewPadding.right)
+            watchedTrailingConstraint
         ])
 
 //        horizontalStackView.addArrangedSubview(watchlistButton)
