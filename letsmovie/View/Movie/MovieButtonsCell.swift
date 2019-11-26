@@ -67,13 +67,25 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
 
         var watchedButtonAlpha: CGFloat = 1
         var watchlistButtonAlpha: CGFloat = 1
+        
+        var watchedButtonBgColor: UIColor = .white
+        var watchlistButoonBgColor: UIColor = .white
+        
+        var watchedButtonTitleColor: UIColor = .black
+        var watchlistButtonTitleColor: UIColor = .black
+        
+        
         //Watchlist Full Screen
         if !buttonStatus.isWatchlistHidden && buttonStatus.isWatchedHidden {
             rightSpaceWidthConstraint.constant = 0
             watchlistTrailingConstraint.constant = stackViewPadding.right
             watchedTrailingConstraint.constant = -stackViewPadding.right
+            
             watchedButtonAlpha = 0
             watchlistButtonAlpha = 1
+            
+            watchlistButoonBgColor = .black
+            watchlistButtonTitleColor = .white
         }
         //Watched Full Screen
         else if buttonStatus.isWatchlistHidden && !buttonStatus.isWatchedHidden {
@@ -83,6 +95,9 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             
             watchedButtonAlpha = 1
             watchlistButtonAlpha = 0
+            
+            watchedButtonBgColor = .black
+            watchedButtonTitleColor = .white
         }
         // show both
         else {
@@ -92,6 +107,11 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             
             watchedButtonAlpha = 1
             watchlistButtonAlpha = 1
+            
+            watchlistButoonBgColor = .white
+            watchlistButtonTitleColor = .black
+            watchedButtonBgColor = .white
+            watchedButtonTitleColor = .black
         }
         
         if !buttonStatus.shouldAnimate {
@@ -106,6 +126,12 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
         }, completion: nil)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            
+            self.watchlistButton.backgroundColor = watchlistButoonBgColor
+            self.watchedButton.backgroundColor = watchedButtonBgColor
+            self.watchlistButton.setTitleColor(watchlistButtonTitleColor, for: .normal)
+            self.watchedButton.setTitleColor(watchedButtonTitleColor, for: .normal)
+            
             self.layoutIfNeeded()
         }, completion: nil)
     }
