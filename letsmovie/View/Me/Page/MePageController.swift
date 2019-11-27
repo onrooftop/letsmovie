@@ -16,6 +16,7 @@ class MePageController: UICollectionViewController, UsableViewModel {
     var disposeBag = DisposeBag()
     private let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
     private let posterSpacing: CGFloat = 10
+    private let noMoviesMessageCenterYAnchorConstant: CGFloat = -60
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -108,8 +109,8 @@ extension MePageController {
         collectionView.addSubview(noMoviesMessageLabel)
         noMoviesMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            noMoviesMessageLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
-            noMoviesMessageLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            noMoviesMessageLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: noMoviesMessageCenterYAnchorConstant),
+            noMoviesMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
     
