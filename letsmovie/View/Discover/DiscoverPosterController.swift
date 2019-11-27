@@ -91,7 +91,7 @@ extension DiscoverPosterController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let assumedRatio: CGFloat = 3 / 2
+        let assumedRatio: CGFloat = posterRatio
         let height: CGFloat = view.frame.height
         let width: CGFloat = height * 1 / assumedRatio
         return .init(width: width, height: height)

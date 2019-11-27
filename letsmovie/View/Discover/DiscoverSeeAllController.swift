@@ -119,7 +119,7 @@ extension DiscoverSeeAllController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let assumedRatio: CGFloat = 3 / 2
+        let assumedRatio: CGFloat = posterRatio
         let numberOfItemsInRow = 3
         let width = floor((view.frame.width - (padding * CGFloat(numberOfItemsInRow - 1)) - paddingInset.left - paddingInset.right) / CGFloat(numberOfItemsInRow))
         let height = assumedRatio * width

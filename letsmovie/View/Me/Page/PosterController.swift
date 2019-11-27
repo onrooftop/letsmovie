@@ -56,7 +56,7 @@ extension PosterController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let assumedPosterRatio: CGFloat = 16 / 9
+        let assumedPosterRatio: CGFloat = posterRatio
         let numberOfItemsInRow = 3
         let totalPosterSpacing = posterSpacing * CGFloat(numberOfItemsInRow - 1) + self.contentInset.left + self.contentInset.right
         let width: CGFloat = floor((view.frame.width - totalPosterSpacing) / CGFloat(numberOfItemsInRow))
