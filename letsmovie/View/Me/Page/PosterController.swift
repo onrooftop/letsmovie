@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RxSwift
+import RxDataSources
 
-class PosterController: UICollectionViewController {
+class PosterController: UICollectionViewController, UsableViewModel {
+    private let disposeBag = DisposeBag()
     
     private let cellId = "cellId"
     private let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
@@ -30,6 +33,28 @@ class PosterController: UICollectionViewController {
         setupView()
         setupCollectionViewController()
     }
+    
+    var viewModel: MePosterViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MePosterViewModel)
+        
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        
+        viewModel.posterViewModels
+            .bind(to: collectionView.rx.items(cellIdentifier: PosterViewModel.cellIdentifier, cellType: PosterCell.self)) {
+                (item, viewModel, cell) in
+                var posterCell = cell
+                posterCell.bind(viewModel: viewModel)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+
+    }
 }
 
 //MARK:- UI Elements
@@ -42,17 +67,8 @@ extension PosterController {
 //MARK:- CollectionView Delegate and Datasource
 extension PosterController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionViewController() {
-        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterViewModel.cellIdentifier)
         collectionView.contentInset = self.contentInset
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PosterCell
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

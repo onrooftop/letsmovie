@@ -7,12 +7,33 @@
 //
 
 import UIKit
+import RxSwift
+import RxDataSources
 
-class MeController: UICollectionViewController {
+enum MePage: Int {
+    case watchlist = 0, watched = 1
     
-    private enum MePage: Int {
-        case watchlist = 0, watched = 1
+    func userMovieStatusCompare(with status: UserMovie.UserMovieStatus) -> Bool {
+        switch status {
+        case .watchlist:
+            if self == .watchlist {
+                return true
+            }
+        case .watched:
+            if self == .watched {
+                return true
+            }
+        case .none:
+            return false
+        }
+        
+        return false
     }
+}
+
+class MeController: UICollectionViewController, UsableViewModel{
+    
+    private let disposeBag = DisposeBag()
     
     //MARK: UI Elements
     private var watchListButton = MeController.watchListButton()
@@ -69,6 +90,25 @@ class MeController: UICollectionViewController {
     private func setPageButtonsColor(with page: MePage) {
         watchListButton.setTitleColor(page == .watchlist ? .black : .darkGray, for: .normal)
         watchedButton.setTitleColor(page == .watchlist ? .darkGray : .black, for: .normal)
+    }
+    
+    var viewModel: MeViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MeViewModel)
+    
+        let dataSource = createDataSource()
+        
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+        
+        viewModel.sectionViewModels
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -128,12 +168,26 @@ extension MeController {
     }
     
 }
+//MARK:- RxDatasource
+extension MeController {
+    func createDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionViewModel> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionViewModel>(configureCell: { (dataSource, collectionView, indexPath, viewModel) -> UICollectionViewCell in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MePosterViewModel.cellIdentifier, for: indexPath)
+            if var cell = cell as? ViewModelBindableType {
+                cell.bind(viewModel: viewModel)
+            }
+            return cell
+        })
+        
+        return dataSource
+    }
+}
 
 //MARK:- CollectionView Delegate DataSource
 extension MeController: UICollectionViewDelegateFlowLayout {
     
     private func setupCollectionViewController() {
-        collectionView.register(PageCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(PageCell.self, forCellWithReuseIdentifier: MePosterViewModel.cellIdentifier)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .init(top: horizontalStackViewHeight, left: 0, bottom: 0, right: 0)

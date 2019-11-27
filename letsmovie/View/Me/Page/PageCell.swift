@@ -8,9 +8,9 @@
 
 import UIKit
 
-class PageCell: UICollectionViewCell {
+class PageCell: UICollectionViewCell, UsableViewModel {
     
-    let pageController = PosterController()
+    var pageController = PosterController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,6 +20,14 @@ class PageCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var viewModel: MePosterViewModel!
+    var bindedViewModel: ViewModelType!
+    func bindViewModel() {
+        viewModel = (bindedViewModel as? MePosterViewModel)
+        
+        pageController.bind(viewModel: viewModel)
     }
 }
 

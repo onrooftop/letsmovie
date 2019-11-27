@@ -36,10 +36,13 @@ class BaseTabBarController: UITabBarController {
         discoverController.bind(viewModel: discoverViewModel)
         
         //MARK: MeController
-        let meController = MeController()
+        var meController = MeController()
         meController.tabBarItem.image = UIImage(named: "user")
         meController.tabBarItem.title = ""
         let meNavController = UINavigationController(rootViewController: meController)
+        
+        let meViewModel = MeViewModel()
+        meController.bind(viewModel: meViewModel)
         
         viewControllers = [
             discoverNavController, meNavController

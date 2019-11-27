@@ -24,6 +24,8 @@
 		AE5D0010238E5B5200B880AF /* UserMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D000F238E5B5200B880AF /* UserMovie.swift */; };
 		AE5D0012238E5F9500B880AF /* UserMovieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0011238E5F9500B880AF /* UserMovieStorage.swift */; };
 		AE5D0014238E8A1000B880AF /* UtilitiesValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0013238E8A1000B880AF /* UtilitiesValue.swift */; };
+		AE5D0017238E8B5A00B880AF /* MeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0016238E8B5A00B880AF /* MeViewModel.swift */; };
+		AE5D0019238E8BF900B880AF /* MePosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0018238E8BF900B880AF /* MePosterViewModel.swift */; };
 		AE5DFFE623894E2000B880AF /* MovieHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFE523894E2000B880AF /* MovieHeaderViewModel.swift */; };
 		AE5DFFE823894E5300B880AF /* MovieHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFE723894E5300B880AF /* MovieHeader.swift */; };
 		AE5DFFEE2389536A00B880AF /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFED2389536A00B880AF /* MovieGenre.swift */; };
@@ -104,6 +106,8 @@
 		AE5D000F238E5B5200B880AF /* UserMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMovie.swift; sourceTree = "<group>"; };
 		AE5D0011238E5F9500B880AF /* UserMovieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMovieStorage.swift; sourceTree = "<group>"; };
 		AE5D0013238E8A1000B880AF /* UtilitiesValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesValue.swift; sourceTree = "<group>"; };
+		AE5D0016238E8B5A00B880AF /* MeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewModel.swift; sourceTree = "<group>"; };
+		AE5D0018238E8BF900B880AF /* MePosterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePosterViewModel.swift; sourceTree = "<group>"; };
 		AE5DFFE523894E2000B880AF /* MovieHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeaderViewModel.swift; sourceTree = "<group>"; };
 		AE5DFFE723894E5300B880AF /* MovieHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeader.swift; sourceTree = "<group>"; };
 		AE5DFFED2389536A00B880AF /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 		AE02AA62237BF8F300185B47 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				AE5D0015238E8B4E00B880AF /* Me */,
 				AE5D000C238ADC2D00B880AF /* Poster */,
 				AE7F01BD23890F9F0030F1F2 /* Movie */,
 				AEBB5534237EE68900E1B957 /* Discover */,
@@ -311,6 +316,15 @@
 				AE5D000D238ADC3E00B880AF /* PosterViewModel.swift */,
 			);
 			path = Poster;
+			sourceTree = "<group>";
+		};
+		AE5D0015238E8B4E00B880AF /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				AE5D0016238E8B5A00B880AF /* MeViewModel.swift */,
+				AE5D0018238E8BF900B880AF /* MePosterViewModel.swift */,
+			);
+			path = Me;
 			sourceTree = "<group>";
 		};
 		AE7F01A82385251D0030F1F2 /* Movie */ = {
@@ -585,6 +599,7 @@
 			files = (
 				AEBB55422383262400E1B957 /* BackEnabledNavigationController.swift in Sources */,
 				AE5DFFFE238A901000B880AF /* MovieButtonsViewModel.swift in Sources */,
+				AE5D0017238E8B5A00B880AF /* MeViewModel.swift in Sources */,
 				AEBB5533237EBB7900E1B957 /* ApiManager.swift in Sources */,
 				AE7F01C2238914430030F1F2 /* Movie.swift in Sources */,
 				AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */,
@@ -595,6 +610,7 @@
 				AE5DFFE623894E2000B880AF /* MovieHeaderViewModel.swift in Sources */,
 				AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */,
 				AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */,
+				AE5D0019238E8BF900B880AF /* MePosterViewModel.swift in Sources */,
 				AE5D0004238AB59400B880AF /* MovieCreditViewModel.swift in Sources */,
 				AE7F01AC23854A6B0030F1F2 /* StretchyHeaderFlowLayout.swift in Sources */,
 				AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */,

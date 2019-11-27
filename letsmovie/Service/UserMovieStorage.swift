@@ -31,10 +31,17 @@ class UserMovieStorage: UserMovieStorageType {
     
     var realm: Realm!
     static let shared = UserMovieStorage()
+    private var userMovieList: ReplaySubject<Results<UserMovie>>
+    
     private init() {
         realm = try! Realm()
         print(".realm Location: [\(Realm.Configuration.defaultConfiguration.fileURL!)]")
+        
+        userMovieList = ReplaySubject<Results<UserMovie>>.create(bufferSize: 1)
+        userMovieList.onNext(getUserMovieList())
     }
+    
+    
     
     @discardableResult
     func createOrUpdateUserMovie(userMovie: UserMovie) -> Observable<UserMovie> {
@@ -42,7 +49,7 @@ class UserMovieStorage: UserMovieStorageType {
         try! realm.write {
             realm.add(userMovie, update: .modified)
         }
-        
+        userMovieList.onNext(getUserMovieList())
         return Observable.just(userMovie)
     }
     
@@ -64,6 +71,9 @@ class UserMovieStorage: UserMovieStorageType {
         newUserMovie.lastEditDate = Date()
         newUserMovie.posterUrlPath = userMovie!.posterUrlPath
         createOrUpdateUserMovie(userMovie: newUserMovie)
+        
+        userMovieList.onNext(getUserMovieList())
+        
         return .just(newUserMovie)
     }
     
@@ -72,6 +82,9 @@ class UserMovieStorage: UserMovieStorageType {
         try! realm.write {
             realm.delete(userMovie)
         }
+        
+        userMovieList.onNext(getUserMovieList())
+        
         return Observable.just(userMovie)
     }
     
@@ -87,6 +100,11 @@ class UserMovieStorage: UserMovieStorageType {
     
     @discardableResult
     func UserMovieList() -> Observable<Results<UserMovie>> {
-        return .just(realm.objects(UserMovie.self))
+        return userMovieList
+    }
+    
+    private func getUserMovieList() -> Results<UserMovie> {
+        return realm.objects(UserMovie.self)
+            .sorted(byKeyPath: "lastEditDate", ascending: false)
     }
 }
