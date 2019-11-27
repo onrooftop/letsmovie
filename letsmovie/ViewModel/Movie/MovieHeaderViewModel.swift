@@ -23,7 +23,7 @@ class MovieHeaderViewModel: ViewModelType, CellIdentifier {
         self.movieHeader = MovieHeader(movie: movie)
         
         title = Observable.just(self.movieHeader.title)
-        backdropUrlString = Observable.just(self.movieHeader.backdropUrlString)
+        backdropUrlString = Observable.just(self.movieHeader.backdropUrlString ?? "")
         
         let runtimeString = self.movieHeader.runtime == nil ? "n/a" : "\(self.movieHeader.runtime!)"
         runtime = Observable.just("\(runtimeString) min")

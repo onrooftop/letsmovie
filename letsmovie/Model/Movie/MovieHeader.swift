@@ -10,7 +10,7 @@ import Foundation
 
 struct MovieHeader {
     let title: String
-    let backdropUrlString: String
+    let backdropUrlString: String?
     let runtime: Int?
 
     init(movie: Movie) {

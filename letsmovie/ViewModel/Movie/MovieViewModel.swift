@@ -32,19 +32,31 @@ class MovieViewModel: ViewModelType {
         
         let movieData = self.service.request(router: .movie(id: "\(self.id)", appendToResponses: [.credits]))
             .map{ try? JSONDecoder().decode(Movie.self, from: $0) }
+            .asObservable()
+            .share()
         
-        Observable.combineLatest(database.findUserMovie(by: id), movieData.asObservable())
-            .subscribe(onNext: { (userMovie, movie) in
-                guard userMovie == nil else { return }
+        let userMovieData = database.findUserMovie(by: id)
+        
+        let createUserMovie = Observable.combineLatest(userMovieData.asObservable(), movieData.asObservable())
+            .flatMap { (userMovie, movie) -> Observable<UserMovie> in
+                guard userMovie == nil else { return .just(userMovie!) }
                 let newUserMovie = UserMovie()
                 newUserMovie.id = id
-                newUserMovie.posterUrlPath = movie?.posterPath
-                database.createOrUpdateUserMovie(userMovie: newUserMovie)
-            })
-            .disposed(by: disposeBag)
+                newUserMovie.posterUrlPath = movie!.posterPath
+                return database.createOrUpdateUserMovie(userMovie: newUserMovie)
+            }
+            .share()
         
-        movieData
-            .subscribe(onSuccess: { (movie) in
+        let isFetching = Observable.combineLatest(
+                movieData.asObservable().map { _ in false },
+                createUserMovie.map{ _ in false }
+            )
+            .startWith((true, true))
+            .map{ $0 == false && $1 == false }
+        
+        isFetching
+            .withLatestFrom(movieData)
+            .subscribe(onNext: { (movie) in
                 guard let movie = movie else { return }
                 var detailSection: SectionViewModel
                 var castSection: SectionViewModel
