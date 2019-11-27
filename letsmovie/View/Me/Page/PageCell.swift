@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class PageCell: UICollectionViewCell, UsableViewModel {
     
@@ -28,6 +30,12 @@ class PageCell: UICollectionViewCell, UsableViewModel {
         viewModel = (bindedViewModel as? MePosterViewModel)
         
         pageController.bind(viewModel: viewModel)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        pageController.disposeBag = DisposeBag()
     }
 }
 
