@@ -64,7 +64,7 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
     private var watchedTrailingConstraint: NSLayoutConstraint!
     
     private func buttonsAnimate(buttonStatus: ButtonStatus) {
-
+        
         var watchedButtonAlpha: CGFloat = 1
         var watchlistButtonAlpha: CGFloat = 1
         
@@ -117,6 +117,14 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
         if !buttonStatus.shouldAnimate {
             self.watchedButton.alpha = watchedButtonAlpha
             self.watchlistButton.alpha = watchlistButtonAlpha
+            
+            self.watchedButton.alpha = watchedButtonAlpha
+            self.watchlistButton.alpha = watchlistButtonAlpha
+            
+            self.watchlistButton.backgroundColor = watchlistButoonBgColor
+            self.watchedButton.backgroundColor = watchedButtonBgColor
+            self.watchlistButton.setTitleColor(watchlistButtonTitleColor, for: .normal)
+            self.watchedButton.setTitleColor(watchedButtonTitleColor, for: .normal)
             return
         }
 

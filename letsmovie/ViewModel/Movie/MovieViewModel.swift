@@ -19,17 +19,31 @@ class MovieViewModel: ViewModelType {
     }
     
     private let service: NetworkSession
+    private let database: UserMovieStorageType
     private let id: Int
     private let disposeBag: DisposeBag
-    init(id: Int, service: NetworkSession) {
+    init(id: Int, service: NetworkSession, database: UserMovieStorageType = UserMovieStorage.shared) {
         self.service = service
+        self.database = database
         self.id = id
         self.disposeBag = DisposeBag()
         self.sections = BehaviorSubject<[SectionViewModel]>(value: [])
         self.sectionsArray = []
         
-        self.service.request(router: .movie(id: "\(self.id)", appendToResponses: [.credits]))
+        let movieData = self.service.request(router: .movie(id: "\(self.id)", appendToResponses: [.credits]))
             .map{ try? JSONDecoder().decode(Movie.self, from: $0) }
+        
+        Observable.combineLatest(database.findUserMovie(by: id), movieData.asObservable())
+            .subscribe(onNext: { (userMovie, movie) in
+                guard userMovie == nil else { return }
+                let newUserMovie = UserMovie()
+                newUserMovie.id = id
+                newUserMovie.posterUrlPath = movie?.posterPath
+                database.createOrUpdateUserMovie(userMovie: newUserMovie)
+            })
+            .disposed(by: disposeBag)
+        
+        movieData
             .subscribe(onSuccess: { (movie) in
                 guard let movie = movie else { return }
                 var detailSection: SectionViewModel
@@ -37,7 +51,7 @@ class MovieViewModel: ViewModelType {
                 var crewSection: SectionViewModel
                 //MARK: Detail Section
                 let movieHeaderViewModel = MovieHeaderViewModel(movie: movie)
-                let movieButtonsViewModel = MovieButtonsViewModel()
+                let movieButtonsViewModel = MovieButtonsViewModel(id: id, database: database)
                 let movieGenreViewModel = MovieGenreViewModel(movie: movie)
                 let movieOverviewVieModel = MovieOverviewViewModel(movie: movie)
                 detailSection = SectionViewModel(header: movieHeaderViewModel, items: [movieButtonsViewModel, movieGenreViewModel, movieOverviewVieModel])

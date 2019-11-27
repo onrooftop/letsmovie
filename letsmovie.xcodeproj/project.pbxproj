@@ -21,6 +21,8 @@
 		AE5D0009238AD1FA00B880AF /* DiscoverHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0008238AD1FA00B880AF /* DiscoverHeaderViewModel.swift */; };
 		AE5D000B238AD9CD00B880AF /* DiscoverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D000A238AD9CD00B880AF /* DiscoverType.swift */; };
 		AE5D000E238ADC3E00B880AF /* PosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D000D238ADC3E00B880AF /* PosterViewModel.swift */; };
+		AE5D0010238E5B5200B880AF /* UserMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D000F238E5B5200B880AF /* UserMovie.swift */; };
+		AE5D0012238E5F9500B880AF /* UserMovieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5D0011238E5F9500B880AF /* UserMovieStorage.swift */; };
 		AE5DFFE623894E2000B880AF /* MovieHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFE523894E2000B880AF /* MovieHeaderViewModel.swift */; };
 		AE5DFFE823894E5300B880AF /* MovieHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFE723894E5300B880AF /* MovieHeader.swift */; };
 		AE5DFFEE2389536A00B880AF /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5DFFED2389536A00B880AF /* MovieGenre.swift */; };
@@ -98,6 +100,8 @@
 		AE5D0008238AD1FA00B880AF /* DiscoverHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverHeaderViewModel.swift; sourceTree = "<group>"; };
 		AE5D000A238AD9CD00B880AF /* DiscoverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverType.swift; sourceTree = "<group>"; };
 		AE5D000D238ADC3E00B880AF /* PosterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterViewModel.swift; sourceTree = "<group>"; };
+		AE5D000F238E5B5200B880AF /* UserMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMovie.swift; sourceTree = "<group>"; };
+		AE5D0011238E5F9500B880AF /* UserMovieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMovieStorage.swift; sourceTree = "<group>"; };
 		AE5DFFE523894E2000B880AF /* MovieHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeaderViewModel.swift; sourceTree = "<group>"; };
 		AE5DFFE723894E5300B880AF /* MovieHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeader.swift; sourceTree = "<group>"; };
 		AE5DFFED2389536A00B880AF /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				AE5D0007238ACEF900B880AF /* Discover */,
 				AE7F01C0238914330030F1F2 /* Movie */,
 				AE7F01C323894C380030F1F2 /* SectionViewModel.swift */,
+				AE5D000F238E5B5200B880AF /* UserMovie.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 			children = (
 				AEBB5530237E9A2600E1B957 /* Router.swift */,
 				AEBB5532237EBB7900E1B957 /* ApiManager.swift */,
+				AE5D0011238E5F9500B880AF /* UserMovieStorage.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -598,6 +604,7 @@
 				AEBB553A2382B06300E1B957 /* DiscoverPosterViewModel.swift in Sources */,
 				AE7F01C423894C380030F1F2 /* SectionViewModel.swift in Sources */,
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
+				AE5D0012238E5F9500B880AF /* UserMovieStorage.swift in Sources */,
 				AEBB5531237E9A2600E1B957 /* Router.swift in Sources */,
 				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
 				AE7F01A52383E5FB0030F1F2 /* DiscoverPosterSection.swift in Sources */,
@@ -609,6 +616,7 @@
 				AE7F01B6238695B70030F1F2 /* MovieGenreCell.swift in Sources */,
 				AEBB5526237DC56300E1B957 /* SnappingHorizontalFlowLayout.swift in Sources */,
 				AE5DFFF02389539800B880AF /* MovieGenreViewModel.swift in Sources */,
+				AE5D0010238E5B5200B880AF /* UserMovie.swift in Sources */,
 				AE5DFFF423897DF900B880AF /* MovieOverviewViewModel.swift in Sources */,
 				AE7F01A72383FB3E0030F1F2 /* SeeAllFooter.swift in Sources */,
 				AE7F01BF23890FCD0030F1F2 /* MovieViewModel.swift in Sources */,
