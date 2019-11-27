@@ -1,6 +1,0 @@
-framework module Pods_letsmovieTests {
-  umbrella header "Pods-letsmovieTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
