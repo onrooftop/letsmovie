@@ -14,8 +14,11 @@ class MePosterViewModel: ViewModelType, CellIdentifier{
     static var cellIdentifier: String = "MePosterViewModel"
  
     let posterViewModels: Observable<[PosterViewModel]>
-    init(posterViewModels: [PosterViewModel]) {
+    private(set) var pageType: MePage
+    
+    init(mePageType: MePage, posterViewModels: [PosterViewModel]) {
         self.posterViewModels = .just(posterViewModels)
+        self.pageType = mePageType
     }
 }
 
@@ -25,6 +28,6 @@ extension MePosterViewModel {
             .filter { pageType.userMovieStatusCompare(with: $0.userMovieStatus) }
             .map { PosterViewModel(id: $0.id, urlString: $0.posterUrlPath) }
         
-        return MePosterViewModel(posterViewModels: posterViewModels)
+        return MePosterViewModel(mePageType: pageType, posterViewModels: posterViewModels)
     }
 }

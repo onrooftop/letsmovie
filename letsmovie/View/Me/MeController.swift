@@ -42,10 +42,7 @@ class MeController: UICollectionViewController, UsableViewModel{
     private var lineIndicatorView = MeController.lineIndicatorView()
     
     private var lineIndicatorViewLeadingConstaint: NSLayoutConstraint!
-    private let cellId = "cellId"
     private let horizontalStackViewHeight: CGFloat = 50
-    
-    private let pages: [MePage] = [MePage.watchlist, MePage.watched]
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -192,26 +189,7 @@ extension MeController: UICollectionViewDelegateFlowLayout {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset = .init(top: horizontalStackViewHeight, left: 0, bottom: 0, right: 0)
     }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pages.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PageCell
-        let page = pages[indexPath.item]
-        
-        switch page {
-        case .watchlist:
-            
-            return cell
-        case .watched:
-            
-            return cell
-        }
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let safeAreaTop = UIApplication.shared.windows.filter{ $0.isKeyWindow }.first?.safeAreaInsets.top ?? 0
         let navHeight = navigationController?.navigationBar.frame.height ?? 0
@@ -230,9 +208,9 @@ extension MeController: UICollectionViewDelegateFlowLayout {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        lineIndicatorViewLeadingConstaint.constant = scrollView.contentOffset.x / CGFloat(pages.count)
+        lineIndicatorViewLeadingConstaint.constant = scrollView.contentOffset.x / CGFloat(viewModel.mePages.count)
         let index = Int(round(scrollView.contentOffset.x / view.frame.width))
-        let pageFromIndex = pages[index]
+        let pageFromIndex = viewModel.mePages[index].pageType
         setPageButtonsColor(with: pageFromIndex)
     }
 }

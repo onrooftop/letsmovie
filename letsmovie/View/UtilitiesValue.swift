@@ -9,3 +9,4 @@
 import UIKit
 
 let posterRatio: CGFloat = 3 / 2
+let pageCount:Int  = 2

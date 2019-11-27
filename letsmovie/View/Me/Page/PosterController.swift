@@ -11,9 +11,8 @@ import RxSwift
 import RxDataSources
 
 class PosterController: UICollectionViewController, UsableViewModel {
-    private let disposeBag = DisposeBag()
     
-    private let cellId = "cellId"
+    private let disposeBag = DisposeBag()
     private let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
     private let posterSpacing: CGFloat = 10
     

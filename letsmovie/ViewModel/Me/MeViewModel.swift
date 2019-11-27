@@ -18,21 +18,24 @@ class MeViewModel: ViewModelType {
         return sections
     }
     
+    private(set) var mePages: [MePosterViewModel]
+    
     private let database: UserMovieStorageType
     init(database: UserMovieStorageType = UserMovieStorage.shared) {
         self.database = database
         self.sections = ReplaySubject<[SectionViewModel]>.create(bufferSize: 1)
-        
+        self.mePages = []
         database.UserMovieList()
             .subscribe(onNext: { (userMovieResutls) in
                 let watchlistViewModel = MePosterViewModel.from(pageType: .watchlist, userMovie: userMovieResutls)
                 let watchedViewModel = MePosterViewModel.from(pageType: .watched, userMovie: userMovieResutls)
+                self.mePages = [
+                    watchlistViewModel,
+                    watchedViewModel
+                ]
                 let sections = [
                     SectionViewModel(header: nil,
-                                     items: [
-                                        watchlistViewModel,
-                                        watchedViewModel
-                    ])
+                                     items: self.mePages)
                 ]
                 
                 self.sections.onNext(sections)
