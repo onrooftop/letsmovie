@@ -26,7 +26,7 @@ class MovieGenreCell: UICollectionViewCell {
 //MARK:- UI Elements
 extension MovieGenreCell {
     private func setupView() {
-        backgroundColor = .black
+        backgroundColor = .darkGray
         
         let height = frame.height
         layer.cornerRadius = height / 2
@@ -46,8 +46,6 @@ extension MovieGenreCell {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 16)
         lb.textColor = .white
-        //TODO: remove this when we have viewModel
-        lb.text = "Science Fiction"
         lb.textAlignment = .center
         return lb
     }
