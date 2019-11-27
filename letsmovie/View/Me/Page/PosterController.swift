@@ -11,6 +11,7 @@ import RxSwift
 import RxDataSources
 
 class PosterController: UICollectionViewController, UsableViewModel {
+    private var noMoviesMessageLabel = PosterController.noMoviesInListLabel()
     
     var disposeBag = DisposeBag()
     private let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
@@ -31,6 +32,7 @@ class PosterController: UICollectionViewController, UsableViewModel {
         
         setupView()
         setupCollectionViewController()
+        setupUIElements()
     }
     
     var viewModel: MePosterViewModel!
@@ -47,6 +49,14 @@ class PosterController: UICollectionViewController, UsableViewModel {
                 var posterCell = cell
                 posterCell.bind(viewModel: viewModel)
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.isNoMovieMessageHidden
+            .bind(to: noMoviesMessageLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.noMovieMessage
+            .bind(to: noMoviesMessageLabel.rx.text)
             .disposed(by: disposeBag)
         
         collectionView.rx.itemSelected
@@ -89,5 +99,26 @@ extension PosterController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return posterSpacing
+    }
+}
+
+//MARK:- UI Elements
+extension PosterController {
+    private func setupUIElements() {
+        collectionView.addSubview(noMoviesMessageLabel)
+        noMoviesMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            noMoviesMessageLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
+            noMoviesMessageLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+        ])
+    }
+    
+    class func noMoviesInListLabel() -> UILabel {
+        let lb = UILabel()
+        lb.font = .systemFont(ofSize: 18)
+        lb.textColor = .lightGray
+        lb.numberOfLines = 0
+        lb.textAlignment = .center
+        return lb
     }
 }

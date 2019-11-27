@@ -15,11 +15,15 @@ class MePosterViewModel: ViewModelType, CellIdentifier{
     static var cellIdentifier: String = "MePosterViewModel"
  
     let posterViewModels: Observable<[PosterViewModel]>
+    let noMovieMessage: Observable<String>
+    let isNoMovieMessageHidden: Observable<Bool>
+    
     private(set) var pageType: MePage
     private let posters: [PosterViewModel]
     private let performMovie: Action<MovieViewModel, Void>?
     private let service: NetworkSession
     private let database: UserMovieStorageType
+
     init(mePageType: MePage, posterViewModels: [PosterViewModel], performMovie: Action<MovieViewModel, Void>?, service: NetworkSession, database: UserMovieStorageType) {
         self.service = service
         self.database = database
@@ -27,6 +31,8 @@ class MePosterViewModel: ViewModelType, CellIdentifier{
         self.pageType = mePageType
         self.posters = posterViewModels
         self.performMovie = performMovie
+        self.noMovieMessage = .just("There are no movies\nin this list yet")
+        self.isNoMovieMessageHidden = .just(posterViewModels.count > 0)
     }
     
     lazy var movieAction: Action<IndexPath, Void> = {
@@ -40,6 +46,7 @@ class MePosterViewModel: ViewModelType, CellIdentifier{
 
 extension MePosterViewModel {
     static func from(pageType: MePage, userMovie: Results<UserMovie>, performMovie: Action<MovieViewModel, Void>?, service: NetworkSession, database: UserMovieStorageType) -> MePosterViewModel {
+        
         let posterViewModels: [PosterViewModel] = userMovie
             .filter { pageType.userMovieStatusCompare(with: $0.userMovieStatus) }
             .map { PosterViewModel(id: $0.id, urlString: $0.posterUrlPath) }
