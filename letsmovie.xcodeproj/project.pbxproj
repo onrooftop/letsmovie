@@ -55,8 +55,8 @@
 		AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */; };
 		AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5510237C129200E1B957 /* DiscoverController.swift */; };
 		AEBB5513237C12B300E1B957 /* MeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5512237C12B200E1B957 /* MeController.swift */; };
-		AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5515237D5AD900E1B957 /* PageCell.swift */; };
-		AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5519237D6AA800E1B957 /* PosterController.swift */; };
+		AEBB5516237D5AD900E1B957 /* MePageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5515237D5AD900E1B957 /* MePageCell.swift */; };
+		AEBB551A237D6AA800E1B957 /* MePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5519237D6AA800E1B957 /* MePageController.swift */; };
 		AEBB551C237D6EA300E1B957 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551B237D6EA300E1B957 /* PosterCell.swift */; };
 		AEBB551E237D79EC00E1B957 /* DiscoverHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */; };
 		AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */; };
@@ -138,8 +138,8 @@
 		AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		AEBB5510237C129200E1B957 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
 		AEBB5512237C12B200E1B957 /* MeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeController.swift; sourceTree = "<group>"; };
-		AEBB5515237D5AD900E1B957 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
-		AEBB5519237D6AA800E1B957 /* PosterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterController.swift; sourceTree = "<group>"; };
+		AEBB5515237D5AD900E1B957 /* MePageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePageCell.swift; sourceTree = "<group>"; };
+		AEBB5519237D6AA800E1B957 /* MePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePageController.swift; sourceTree = "<group>"; };
 		AEBB551B237D6EA300E1B957 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		AEBB551D237D79EC00E1B957 /* DiscoverHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverHeader.swift; sourceTree = "<group>"; };
 		AEBB5521237D80CF00E1B957 /* DiscoverCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCell.swift; sourceTree = "<group>"; };
@@ -300,6 +300,14 @@
 			path = Scene;
 			sourceTree = "<group>";
 		};
+		AE1469C7238EFB3100C8C53A /* Poster */ = {
+			isa = PBXGroup;
+			children = (
+				AEBB551B237D6EA300E1B957 /* PosterCell.swift */,
+			);
+			path = Poster;
+			sourceTree = "<group>";
+		};
 		AE5D0007238ACEF900B880AF /* Discover */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +403,7 @@
 		AEBB550F237C128200E1B957 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				AE1469C7238EFB3100C8C53A /* Poster */,
 				AEBB5514237D5AC400E1B957 /* Page */,
 				AEBB5512237C12B200E1B957 /* MeController.swift */,
 			);
@@ -404,9 +413,8 @@
 		AEBB5514237D5AC400E1B957 /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				AEBB5515237D5AD900E1B957 /* PageCell.swift */,
-				AEBB5519237D6AA800E1B957 /* PosterController.swift */,
-				AEBB551B237D6EA300E1B957 /* PosterCell.swift */,
+				AEBB5515237D5AD900E1B957 /* MePageCell.swift */,
+				AEBB5519237D6AA800E1B957 /* MePageController.swift */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -617,7 +625,7 @@
 				AE5DFFFC23898AA400B880AF /* ViewModelType.swift in Sources */,
 				AE7F01B82387C0F90030F1F2 /* MovieOverviewCell.swift in Sources */,
 				AE5DFFEE2389536A00B880AF /* MovieGenre.swift in Sources */,
-				AEBB551A237D6AA800E1B957 /* PosterController.swift in Sources */,
+				AEBB551A237D6AA800E1B957 /* MePageController.swift in Sources */,
 				AE7F01B423868D650030F1F2 /* MovieGenresController.swift in Sources */,
 				AE5D0009238AD1FA00B880AF /* DiscoverHeaderViewModel.swift in Sources */,
 				AEBB553A2382B06300E1B957 /* DiscoverPosterViewModel.swift in Sources */,
@@ -625,7 +633,7 @@
 				AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */,
 				AE5D0012238E5F9500B880AF /* UserMovieStorage.swift in Sources */,
 				AEBB5531237E9A2600E1B957 /* Router.swift in Sources */,
-				AEBB5516237D5AD900E1B957 /* PageCell.swift in Sources */,
+				AEBB5516237D5AD900E1B957 /* MePageCell.swift in Sources */,
 				AE7F01A52383E5FB0030F1F2 /* DiscoverPosterSection.swift in Sources */,
 				AE7F01BA2387FC3C0030F1F2 /* MovieCreditHeader.swift in Sources */,
 				AE7F01BC2387FF060030F1F2 /* MovieCreditCell.swift in Sources */,

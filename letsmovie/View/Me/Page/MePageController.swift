@@ -10,8 +10,8 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-class PosterController: UICollectionViewController, UsableViewModel {
-    private var noMoviesMessageLabel = PosterController.noMoviesInListLabel()
+class MePageController: UICollectionViewController, UsableViewModel {
+    private var noMoviesMessageLabel = MePageController.noMoviesInListLabel()
     
     var disposeBag = DisposeBag()
     private let contentInset: UIEdgeInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
@@ -71,14 +71,14 @@ class PosterController: UICollectionViewController, UsableViewModel {
 }
 
 //MARK:- UI Elements
-extension PosterController {
+extension MePageController {
     private func setupView() {
         collectionView.backgroundColor = .white
     }
 }
 
 //MARK:- CollectionView Delegate and Datasource
-extension PosterController: UICollectionViewDelegateFlowLayout {
+extension MePageController: UICollectionViewDelegateFlowLayout {
     private func setupCollectionViewController() {
         collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterViewModel.cellIdentifier)
         collectionView.contentInset = self.contentInset
@@ -103,7 +103,7 @@ extension PosterController: UICollectionViewDelegateFlowLayout {
 }
 
 //MARK:- UI Elements
-extension PosterController {
+extension MePageController {
     private func setupUIElements() {
         collectionView.addSubview(noMoviesMessageLabel)
         noMoviesMessageLabel.translatesAutoresizingMaskIntoConstraints = false

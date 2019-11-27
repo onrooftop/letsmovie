@@ -205,7 +205,7 @@ extension MeController {
 extension MeController: UICollectionViewDelegateFlowLayout {
     
     private func setupCollectionViewController() {
-        collectionView.register(PageCell.self, forCellWithReuseIdentifier: MePosterViewModel.cellIdentifier)
+        collectionView.register(MePageCell.self, forCellWithReuseIdentifier: MePosterViewModel.cellIdentifier)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
     }

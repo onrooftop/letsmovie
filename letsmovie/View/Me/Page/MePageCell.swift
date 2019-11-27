@@ -10,9 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class PageCell: UICollectionViewCell, UsableViewModel {
+class MePageCell: UICollectionViewCell, UsableViewModel {
     
-    var pageController = PosterController()
+    var mePageController = MePageController()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,20 +29,20 @@ class PageCell: UICollectionViewCell, UsableViewModel {
     func bindViewModel() {
         viewModel = (bindedViewModel as? MePosterViewModel)
         
-        pageController.bind(viewModel: viewModel)
+        mePageController.bind(viewModel: viewModel)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        pageController.disposeBag = DisposeBag()
+        mePageController.disposeBag = DisposeBag()
     }
 }
 
 //MARK:- UI Elements
-extension PageCell {
+extension MePageCell {
     private func setupPageController() {
-        let pageControllerView = pageController.view!
+        let pageControllerView = mePageController.view!
         pageControllerView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(pageControllerView)
         NSLayoutConstraint.activate([
