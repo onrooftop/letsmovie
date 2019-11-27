@@ -230,8 +230,8 @@ extension MeController: UICollectionViewDelegateFlowLayout {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         lineIndicatorViewLeadingConstaint.constant = scrollView.contentOffset.x / CGFloat(viewModel.mePages.count)
         var index = Int(round(scrollView.contentOffset.x / view.frame.width))
-        index = min(0, index)
-        index = max(index, viewModel.mePages.count - 1)
+        index = max(0, index)
+        index = min(index, viewModel.mePages.count - 1)
         let pageFromIndex = viewModel.mePages[index].pageType
         setPageButtonsColor(with: pageFromIndex)
     }
