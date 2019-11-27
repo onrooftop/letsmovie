@@ -60,6 +60,13 @@ class MeController: UICollectionViewController, UsableViewModel{
         setupNavigationBar()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        collectionView.contentInset = .init(top: horizontalStackViewHeight, left: 0, bottom: 0, right: 0)
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -201,7 +208,6 @@ extension MeController: UICollectionViewDelegateFlowLayout {
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: MePosterViewModel.cellIdentifier)
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInset = .init(top: horizontalStackViewHeight, left: 0, bottom: 0, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -238,6 +244,7 @@ extension MeController {
     }
     
     private func setupNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.tintColor = .black
