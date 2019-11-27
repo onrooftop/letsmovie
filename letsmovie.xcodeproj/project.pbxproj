@@ -259,6 +259,7 @@
 		AE02AA63237BF8FC00185B47 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AE1469C7238EFB3100C8C53A /* Poster */,
 				AE7F01A82385251D0030F1F2 /* Movie */,
 				AEBB550F237C128200E1B957 /* Me */,
 				AEBB550E237C127700E1B957 /* Discover */,
@@ -403,7 +404,6 @@
 		AEBB550F237C128200E1B957 /* Me */ = {
 			isa = PBXGroup;
 			children = (
-				AE1469C7238EFB3100C8C53A /* Poster */,
 				AEBB5514237D5AC400E1B957 /* Page */,
 				AEBB5512237C12B200E1B957 /* MeController.swift */,
 			);
