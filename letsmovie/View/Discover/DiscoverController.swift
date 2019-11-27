@@ -13,10 +13,6 @@ import RxSwift
 import Action
 
 class DiscoverController: UICollectionViewController, UsableViewModel {
-    
-    private let cellId = "cellId"
-    private let headerId = "headerId"
-    
     private let disposeBag = DisposeBag()
     
     var dataSource: RxCollectionViewSectionedReloadDataSource<SectionViewModel>!
@@ -31,11 +27,16 @@ class DiscoverController: UICollectionViewController, UsableViewModel {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationController()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-        setupNavigationController()
         setupCollectionView()
     }
     
@@ -87,6 +88,8 @@ extension DiscoverController {
     }
     
     private func setupNavigationController() {
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.tintColor = .black
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Discover"

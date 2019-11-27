@@ -49,6 +49,10 @@ class PosterController: UICollectionViewController, UsableViewModel {
             }
             .disposed(by: disposeBag)
         
+        collectionView.rx.itemSelected
+            .bind(to: viewModel.movieAction.inputs)
+            .disposed(by: disposeBag)
+        
         collectionView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)

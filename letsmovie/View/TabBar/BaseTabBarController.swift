@@ -41,7 +41,7 @@ class BaseTabBarController: UITabBarController {
         meController.tabBarItem.title = ""
         let meNavController = UINavigationController(rootViewController: meController)
         
-        let meViewModel = MeViewModel()
+        let meViewModel = MeViewModel(service: ApiManager.shared, database: UserMovieStorage.shared)
         meController.bind(viewModel: meViewModel)
         
         viewControllers = [

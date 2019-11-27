@@ -54,12 +54,17 @@ class MeController: UICollectionViewController, UsableViewModel{
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationBar()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUIElements()
         setupView()
-        setupNavigationBar()
         setupCollectionViewController()
         addTargetButtons()
     }
@@ -101,6 +106,15 @@ class MeController: UICollectionViewController, UsableViewModel{
         
         viewModel.sectionViewModels
             .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        viewModel.selectedMovie
+            .subscribe(onNext: { [unowned self] (movieViewModel) in
+                var movieVC = MovieController()
+                movieVC.bind(viewModel: movieViewModel)
+                movieVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(movieVC, animated: true)
+            })
             .disposed(by: disposeBag)
         
         collectionView.rx
@@ -223,6 +237,8 @@ extension MeController {
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.tintColor = .black
         navigationItem.title = "Me"
     }
 }

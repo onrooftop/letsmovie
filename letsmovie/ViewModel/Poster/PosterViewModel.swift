@@ -14,8 +14,10 @@ class PosterViewModel: ViewModelType, CellIdentifier {
     
     let urlString: Observable<String>
     let id: Observable<Int>
+    let key: Int
     init(id: Int, urlString: String?) {
         self.urlString = .just(urlString ?? "")
         self.id = .just(id)
+        self.key = id
     }
 }
