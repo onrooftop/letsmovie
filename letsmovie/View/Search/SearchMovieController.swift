@@ -16,11 +16,17 @@ class SearchMovieController: UITableViewController, UsableViewModel {
     private var searchController = SearchMovieController.searchController()
     private var noMoviesMessage = SearchMovieController.noMoviesMessage()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationController()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-        setupNavigationController()
         setupTableView()
     }
     
@@ -99,10 +105,11 @@ extension SearchMovieController {
     }
     
     private func setupNavigationController() {
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Search"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.searchController = searchController
     }
     

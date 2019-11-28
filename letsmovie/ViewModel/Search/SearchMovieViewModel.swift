@@ -100,8 +100,8 @@ class SearchMovieViewModel: ViewModelType {
                 let searches = discoverPoster.results.map { ($0.id, $0.title) }
                 self.totalPageNumber = discoverPoster.totalPages
                 self.searchArray += searches
-                self.footerVisibility.onNext(self.searchArray.count < 1)
-                self.noMoviesMessageVisibility.onNext(self.searchArray.count > 1)
+                self.footerVisibility.onNext(self.searchArray.count <= 1)
+                self.noMoviesMessageVisibility.onNext(self.searchArray.count >= 1)
                 self.cellViewModels.onNext(
                     self.searchArray.map { SearchMovieCellViewModel(id: $0.id, title: $0.title) }
                 )
