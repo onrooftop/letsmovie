@@ -74,7 +74,7 @@ class MePageController: UICollectionViewController, UsableViewModel {
 //MARK:- UI Elements
 extension MePageController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemGroupedBackground
     }
 }
 
@@ -117,7 +117,7 @@ extension MePageController {
     class func noMoviesInListLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 18)
-        lb.textColor = .lightGray
+        lb.textColor = .systemGray
         lb.numberOfLines = 0
         lb.textAlignment = .center
         return lb

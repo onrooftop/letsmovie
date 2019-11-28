@@ -14,12 +14,12 @@ import RxCocoa
 class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
     
     private let disposeBag = DisposeBag()
-    
     var watchlistButton = MovieButtonsCell.createButton(title: "Watchlist")
     var watchedButton = MovieButtonsCell.createButton(title: "Watched")
-    
+
     private let minimunLineSpacing: CGFloat = 10
     private let buttonSpacing: CGFloat = 12
+    
     private lazy var stackViewPadding: UIEdgeInsets = {
         return .init(top: self.minimunLineSpacing, left: self.buttonSpacing / 2, bottom: 0, right: -self.buttonSpacing / 2)
     }()
@@ -33,9 +33,19 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
     }
     
     override init(frame: CGRect) {
+
         super.init(frame: frame)
         
         setupView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        traitCollection.performAsCurrent {
+            watchlistButton.layer.borderColor = UIColor.selectedListBG.cgColor
+            watchedButton.layer.borderColor = UIColor.selectedListBG.cgColor
+            
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -68,11 +78,11 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
         var watchedButtonAlpha: CGFloat = 1
         var watchlistButtonAlpha: CGFloat = 1
         
-        var watchedButtonBgColor: UIColor = .white
-        var watchlistButoonBgColor: UIColor = .white
+        var watchedButtonBgColor: UIColor = .systemBackground
+        var watchlistButoonBgColor: UIColor = .systemBackground
         
-        var watchedButtonTitleColor: UIColor = .black
-        var watchlistButtonTitleColor: UIColor = .black
+        var watchedButtonTitleColor: UIColor = .label
+        var watchlistButtonTitleColor: UIColor = .label
         
         
         //Watchlist Full Screen
@@ -84,8 +94,8 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             watchedButtonAlpha = 0
             watchlistButtonAlpha = 1
             
-            watchlistButoonBgColor = .black
-            watchlistButtonTitleColor = .white
+            watchlistButoonBgColor = .selectedListBG
+            watchlistButtonTitleColor = .selectedListTitle
         }
         //Watched Full Screen
         else if buttonStatus.isWatchlistHidden && !buttonStatus.isWatchedHidden {
@@ -96,8 +106,8 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             watchedButtonAlpha = 1
             watchlistButtonAlpha = 0
             
-            watchedButtonBgColor = .black
-            watchedButtonTitleColor = .white
+            watchedButtonBgColor = .selectedListBG
+            watchedButtonTitleColor = .selectedListTitle
         }
         // show both
         else {
@@ -108,10 +118,10 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
             watchedButtonAlpha = 1
             watchlistButtonAlpha = 1
             
-            watchlistButoonBgColor = .white
-            watchlistButtonTitleColor = .black
-            watchedButtonBgColor = .white
-            watchedButtonTitleColor = .black
+            watchlistButoonBgColor = .systemBackground
+            watchlistButtonTitleColor = .label
+            watchedButtonBgColor = .systemBackground
+            watchedButtonTitleColor = .label
         }
         
         if !buttonStatus.shouldAnimate {
@@ -149,13 +159,13 @@ class MovieButtonsCell: UICollectionViewCell, UsableViewModel{
 //MARK: UI Elements
 extension MovieButtonsCell {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         let rightSpaceView = UIView()
         
         addSubview(watchlistButton)
         addSubview(rightSpaceView)
         rightSpaceView.addSubview(watchedButton)
-        
+
         watchlistButton.layer.cornerRadius = buttonHeight / 2
         watchedButton.layer.cornerRadius = buttonHeight / 2
         
@@ -189,30 +199,15 @@ extension MovieButtonsCell {
             watchedButton.leftAnchor.constraint(equalTo: rightSpaceView.leftAnchor, constant: stackViewPadding.left),
             watchedTrailingConstraint
         ])
-
-//        horizontalStackView.addArrangedSubview(watchlistButton)
-//        horizontalStackView.addArrangedSubview(watchedButton)
-//        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
-//        horizontalStackView.spacing = buttonSpacing
-//        addSubview(horizontalStackView)
-//        NSLayoutConstraint.activate([
-//            horizontalStackView.topAnchor.constraint(equalTo: topAnchor, constant: stackViewPadding.top),
-//            horizontalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: stackViewPadding.left),
-//            horizontalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: stackViewPadding.right),
-//        ])
-        
-        
-        
     }
     
     class func createButton(title: String) -> UIButton {
         let bt = UIButton(type: UIButton.ButtonType.system)
         bt.setTitle(title, for: .normal)
-        bt.layer.borderColor = UIColor.black.cgColor
         bt.layer.borderWidth = 2
-        bt.backgroundColor = .white
-        bt.setTitleColor(.black, for: .normal)
-        bt.setTitleColor(.white, for: .highlighted)
+        bt.backgroundColor = .systemBackground
+        bt.setTitleColor(.selectedListTitle, for: .normal)
+        bt.setTitleColor(.selectedListBG, for: .highlighted)
         bt.titleLabel?.font = .boldSystemFont(ofSize: 18)
         bt.clipsToBounds = true
         return bt

@@ -32,7 +32,7 @@ class MovieGenresCell: UICollectionViewCell, UsableViewModel{
 
 extension MovieGenresCell {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         
         guard let movieGenresControllerView = movieGenresController.view else { return }
         movieGenresControllerView.translatesAutoresizingMaskIntoConstraints = false

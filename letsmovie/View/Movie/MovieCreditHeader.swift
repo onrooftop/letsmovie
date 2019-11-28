@@ -40,7 +40,7 @@ class MovieCreditHeader: UICollectionReusableView, UsableViewModel {
 //MARK:- UI Elements
 extension MovieCreditHeader {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +54,7 @@ extension MovieCreditHeader {
     class func titleLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 20)
+        lb.textColor = .label
         return lb
     }
 }

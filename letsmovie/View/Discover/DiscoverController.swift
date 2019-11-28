@@ -84,12 +84,12 @@ class DiscoverController: UICollectionViewController, UsableViewModel {
 //MARK:- UI Elements
 extension DiscoverController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
     }
     
     private func setupNavigationController() {
         navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Discover"

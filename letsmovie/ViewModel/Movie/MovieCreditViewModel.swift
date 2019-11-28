@@ -39,8 +39,8 @@ extension MovieCreditViewModel: CellIdentifier {
                 .map { (cast) -> MovieCreditViewModel in
                     let name = cast.name
                     let imageUrlString = cast.profilePath
-                    let detail = NSMutableAttributedString(string: "as ", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.lightGray])
-                    detail.append(NSAttributedString(string: cast.character, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.darkGray]))
+                    let detail = NSMutableAttributedString(string: "as ", attributes: [.font: UIFont.systemFont(ofSize: 14), .foregroundColor: UIColor.systemGray3])
+                    detail.append(NSAttributedString(string: cast.character, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.systemGray]))
                     let shortName = imageUrlString == nil ? toShortName(name: name) : ""
                     let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString, shortName: shortName)
                     return MovieCreditViewModel(movieCredit: movieCredit)
@@ -57,7 +57,7 @@ extension MovieCreditViewModel: CellIdentifier {
                 .map { (crew) -> MovieCreditViewModel in
                     let name = crew.name
                     let imageUrlString = crew.profilePath
-                    let detail = NSAttributedString(string: crew.job, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.darkGray])
+                    let detail = NSAttributedString(string: crew.job, attributes: [.font: UIFont.boldSystemFont(ofSize: 16), .foregroundColor: UIColor.systemGray])
                     let shortName = imageUrlString == nil ? toShortName(name: name) : ""
                     let movieCredit = MovieCredit(name: name, detail: detail, imageUrlString: imageUrlString, shortName: shortName)
                     return MovieCreditViewModel(movieCredit: movieCredit)

@@ -61,7 +61,7 @@ class MovieController: UICollectionViewController, UsableViewModel {
 //MARK:- UI Elements
 extension MovieController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
     }

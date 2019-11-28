@@ -60,7 +60,7 @@ class MovieCreditCell: UICollectionViewCell, UsableViewModel {
 //MARK:- UI Elements
 extension MovieCreditCell {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         
         shortNameLabel.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.addSubview(shortNameLabel)
@@ -97,24 +97,27 @@ extension MovieCreditCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.backgroundColor = .lightGray
+        iv.backgroundColor = .systemGray3
         return iv
     }
     
     class func shortNameLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 30)
+        lb.textColor = .label
         return lb
     }
     
     class func nameLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 18)
+        lb.textColor = .label
         return lb
     }
     
     class func detailLabel() -> UILabel {
         let lb = UILabel()
+        lb.textColor = .label
         return lb
     }
 }

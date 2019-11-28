@@ -66,7 +66,7 @@ class MovieGenresController: UICollectionViewController, UsableViewModel {
 //MARK: UI Elements
 extension MovieGenresController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.isScrollEnabled = false
     }
 }

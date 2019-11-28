@@ -25,6 +25,8 @@ class MovieHeaderView: UICollectionReusableView, UsableViewModel {
         super.init(frame: frame)
         
         setupView()
+        
+        overrideUserInterfaceStyle = .dark
     }
     
     required init?(coder: NSCoder) {
@@ -58,7 +60,7 @@ class MovieHeaderView: UICollectionReusableView, UsableViewModel {
 //MARK:- UI Elements
 extension MovieHeaderView {
     private func setupView() {
-        backgroundColor = .black
+        backgroundColor = .systemBackground
         
         addSubview(backdropImageView)
         backdropImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,8 +96,6 @@ extension MovieHeaderView {
     
     class func backdropImageView() -> UIImageView {
         let iv = UIImageView()
-        //TODO: remove this when finished viewModel
-        iv.image = #imageLiteral(resourceName: "backdrop")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.alpha = 0.6
@@ -114,14 +114,14 @@ extension MovieHeaderView {
         lb.font = .boldSystemFont(ofSize: 48)
         lb.numberOfLines = 0
         lb.lineBreakMode = .byWordWrapping
-        lb.textColor = .white
+        lb.textColor = .label
         return lb
     }
     
     class func runtimeLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 24)
-        lb.textColor = .white
+        lb.textColor = .label
         return lb
     }
 }

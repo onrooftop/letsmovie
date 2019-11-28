@@ -61,6 +61,7 @@ extension DiscoverHeader {
     class func titleLabel() -> UILabel {
         let lb = UILabel()
         lb.text = "Title"
+        lb.textColor = .label
         lb.font = .boldSystemFont(ofSize: 24)
         return lb
     }
@@ -68,7 +69,7 @@ extension DiscoverHeader {
     class func seeAllButton() -> UIButton {
         let bt = UIButton(type: .system)
         bt.setTitle("See All", for: .normal)
-        bt.setTitleColor(.lightGray, for: .normal)
+        bt.setTitleColor(.systemGray, for: .normal)
         bt.titleLabel?.font = .systemFont(ofSize: 16)
         return bt
     }

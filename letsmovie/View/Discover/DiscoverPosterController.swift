@@ -62,7 +62,7 @@ class DiscoverPosterController: UICollectionViewController, UsableViewModel {
 //MARK:- UI Elements
 extension DiscoverPosterController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
     }
 }
 

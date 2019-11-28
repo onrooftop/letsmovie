@@ -97,8 +97,8 @@ class MeController: UICollectionViewController, UsableViewModel{
     }
     
     private func setPageButtonsColor(with page: MePage) {
-        watchListButton.setTitleColor(page == .watchlist ? .black : .darkGray, for: .normal)
-        watchedButton.setTitleColor(page == .watchlist ? .darkGray : .black, for: .normal)
+        watchListButton.setTitleColor(page == .watchlist ? .label : .systemGray3, for: .normal)
+        watchedButton.setTitleColor(page == .watchlist ? .systemGray3 : .label, for: .normal)
     }
     
     var viewModel: MeViewModel!
@@ -136,7 +136,7 @@ extension MeController {
         let bt = UIButton(type: .system)
         bt.setTitle("Watchlist", for: .normal)
         bt.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        bt.setTitleColor(.black, for: .normal)
+        bt.setTitleColor(.label, for: .normal)
         return bt
     }
     
@@ -144,7 +144,7 @@ extension MeController {
         let bt = UIButton(type: .system)
         bt.setTitle("Watched", for: .normal)
         bt.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        bt.setTitleColor(.darkGray, for: .normal)
+        bt.setTitleColor(.label, for: .normal)
         return bt
     }
     
@@ -157,7 +157,7 @@ extension MeController {
     
     class func lineIndicatorView() -> UIView {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = .label
         return view
     }
     
@@ -240,14 +240,14 @@ extension MeController: UICollectionViewDelegateFlowLayout {
 //MARK:- Setup
 extension MeController {
     private func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemGroupedBackground
     }
     
     private func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .label
         navigationItem.title = "Me"
     }
 }

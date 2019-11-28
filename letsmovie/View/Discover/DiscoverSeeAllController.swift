@@ -80,7 +80,7 @@ class DiscoverSeeAllController: UICollectionViewController, UsableViewModel {
 //MARK:- UI Elements
 extension DiscoverSeeAllController {
     func setupView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemGroupedBackground
     }
     
     func setupNavigationController() {

@@ -26,7 +26,7 @@ class MovieGenreCell: UICollectionViewCell {
 //MARK:- UI Elements
 extension MovieGenreCell {
     private func setupView() {
-        backgroundColor = .darkGray
+        backgroundColor = .systemGray5
         
         let height = frame.height
         layer.cornerRadius = height / 2
@@ -45,7 +45,7 @@ extension MovieGenreCell {
     class func genreLabel() -> UILabel {
         let lb = UILabel()
         lb.font = .boldSystemFont(ofSize: 16)
-        lb.textColor = .white
+        lb.textColor = .label
         lb.textAlignment = .center
         return lb
     }

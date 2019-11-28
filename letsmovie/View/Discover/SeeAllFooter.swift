@@ -27,7 +27,7 @@ class SeeAllFooter: UICollectionReusableView {
 //MARK:- UI Element
 extension SeeAllFooter {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemGroupedBackground
         addSubview(activityIndicatorView)
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         activityIndicatorView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

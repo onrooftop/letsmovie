@@ -54,7 +54,7 @@ extension PosterCell {
     
     class func posterImageView() -> UIImageView {
         let iv = UIImageView()
-        iv.backgroundColor = .lightGray
+        iv.backgroundColor = .systemGray5
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 2

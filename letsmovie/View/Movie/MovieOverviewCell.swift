@@ -41,7 +41,7 @@ class MovieOverviewCell: UICollectionViewCell, UsableViewModel {
 //MARK:- UI Element
 extension MovieOverviewCell {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         
         overviewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(overviewTitleLabel)
@@ -65,6 +65,7 @@ extension MovieOverviewCell {
         let lb = UILabel()
         lb.text = "Overview"
         lb.font = .boldSystemFont(ofSize: 20)
+        lb.textColor = .label
         return lb
     }
     
@@ -72,6 +73,7 @@ extension MovieOverviewCell {
         let lb = UILabel()
         lb.font = .systemFont(ofSize: 16)
         lb.numberOfLines = 0
+        lb.textColor = .label
         return lb
     }
 }

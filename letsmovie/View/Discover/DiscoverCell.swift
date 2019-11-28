@@ -41,7 +41,7 @@ class DiscoverCell: UICollectionViewCell, UsableViewModel {
 //MARK:- UI Elements
 extension DiscoverCell {
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
     }
     
     private func setupUIElements() {
