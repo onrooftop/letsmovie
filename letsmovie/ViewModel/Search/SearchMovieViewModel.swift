@@ -8,12 +8,17 @@
 
 import Foundation
 import RxSwift
+import Action
 
 class SearchMovieViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     let row: PublishSubject<Int>
     let searchText: PublishSubject<String>
+    
+    var selectedViewModel: Observable<MovieViewModel> {
+        return movieViewModel
+    }
     
     var isNoMoivesMessageHidden: Observable<Bool> {
         return noMoviesMessageVisibility
@@ -31,6 +36,7 @@ class SearchMovieViewModel: ViewModelType {
     private let cellViewModels: BehaviorSubject<[SearchMovieCellViewModel]>
     private let footerVisibility: BehaviorSubject<Bool>
     private let noMoviesMessageVisibility: BehaviorSubject<Bool>
+    private let movieViewModel: PublishSubject<MovieViewModel>
     private var searchArray: [(id: Int, title: String)] = []
     private var pageNumberInt: Int = 1
     private var totalPageNumber: Int = 2
@@ -41,6 +47,7 @@ class SearchMovieViewModel: ViewModelType {
         cellViewModels = BehaviorSubject<[SearchMovieCellViewModel]>(value: [])
         footerVisibility = BehaviorSubject<Bool>(value: false)
         noMoviesMessageVisibility = BehaviorSubject<Bool>(value: false)
+        movieViewModel = PublishSubject<MovieViewModel>()
         
         searchText = PublishSubject<String>()
         row = PublishSubject<Int>()
@@ -102,4 +109,12 @@ class SearchMovieViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
     }
+    
+    lazy var selectedItem: Action<IndexPath, Void> = {
+        return Action<IndexPath, Void> { indexPath in
+            let id = self.searchArray[indexPath.row].id
+            self.movieViewModel.onNext(MovieViewModel(id: id, service: self.service))
+            return .empty()
+        }
+    }()
 }

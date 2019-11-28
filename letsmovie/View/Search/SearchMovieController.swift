@@ -64,6 +64,20 @@ class SearchMovieController: UITableViewController, UsableViewModel {
             .bind(to: noMoviesMessage.rx.isHidden)
             .disposed(by: disposeBag)
         
+        viewModel.selectedViewModel
+            .subscribe(onNext: { [unowned self] (viewModel) in
+                var movieController = MovieController()
+                movieController.hidesBottomBarWhenPushed = true
+                movieController.bind(viewModel: viewModel)
+                self.navigationController?.pushViewController(movieController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        tableView
+            .rx.itemSelected
+            .bind(to: viewModel.selectedItem.inputs)
+            .disposed(by: disposeBag)
+        
         tableView
             .rx.setDelegate(self)
             .disposed(by: disposeBag)
