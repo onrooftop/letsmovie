@@ -15,6 +15,7 @@ typealias JSON = [String: Any]
 protocol NetworkSession {
     func request(router: Router) -> Single<Data>
     func request(discoverType: DiscoverType, page: Int) -> Single<Data>
+    func requestSearchMovie(query: String, page: Int) -> Single<Data>
 }
 
 class ApiManager: NetworkSession {
@@ -50,6 +51,10 @@ class ApiManager: NetworkSession {
         
         return self.request(router: router)
         
+    }
+    
+    func requestSearchMovie(query: String, page: Int) -> Single<Data> {
+        return self.request(router: .search(query: query, page: page))
     }
 }
 

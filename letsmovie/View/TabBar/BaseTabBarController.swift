@@ -24,6 +24,7 @@ class BaseTabBarController: UITabBarController {
         view.backgroundColor = .systemBackground
         tabBar.tintColor = .systemGray
         tabBar.unselectedItemTintColor = .systemGray3
+        tabBar.itemPositioning = .centered
     }
     
     private func setupTabBarItems() {
@@ -36,6 +37,15 @@ class BaseTabBarController: UITabBarController {
         let discoverViewModel = DiscoverViewModel(service: ApiManager.shared)
         discoverController.bind(viewModel: discoverViewModel)
         
+        //MARK: SearchMovieController
+        var searchController = SearchMovieController()
+        searchController.tabBarItem.image = UIImage(named: "search")
+        searchController.tabBarItem.title = ""
+        let searchNavController = BackEnabledNavigationController(rootViewController: searchController)
+        
+        let searchMovieViewModel = SearchMovieViewModel(service: ApiManager.shared)
+        searchController.bind(viewModel: searchMovieViewModel)
+        
         //MARK: MeController
         var meController = MeController()
         meController.tabBarItem.image = UIImage(named: "user")
@@ -46,7 +56,7 @@ class BaseTabBarController: UITabBarController {
         meController.bind(viewModel: meViewModel)
         
         viewControllers = [
-            discoverNavController, meNavController
+            discoverNavController, searchNavController, meNavController
         ]
     }
     

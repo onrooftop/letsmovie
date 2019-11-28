@@ -15,6 +15,7 @@ enum Router: URLRequestConvertible {
     case popular(page: Int)
     case nowPlaying(page: Int)
     case upcoming(page: Int)
+    case search(query: String, page: Int)
     
     enum appendToResponseType: String {
         case videos, credits
@@ -36,6 +37,8 @@ enum Router: URLRequestConvertible {
             return "/movie/now_playing?page=\(page)"
         case .upcoming(let page):
             return "/movie/upcoming?page=\(page)"
+        case .search(let query, let page):
+            return "/search/movie?query=\(query)&page=\(page)"
         }
     }
     
@@ -48,6 +51,8 @@ enum Router: URLRequestConvertible {
         case .nowPlaying:
             return .get
         case .upcoming:
+            return .get
+        case .search:
             return .get
         }
     }

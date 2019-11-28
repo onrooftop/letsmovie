@@ -22,9 +22,10 @@ struct DiscoverPoster: Decodable {
 struct DiscoverResult: Decodable {
     let id: Int
     let posterPath: String?
+    let title: String
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, title
         case posterPath = "poster_path"
     }
 }
