@@ -12,8 +12,11 @@ import RxDataSources
 import RxCocoa
 
 class MovieController: UICollectionViewController, UsableViewModel {
-    private let minimumLineSpacing: CGFloat = 10
     private let disposeBag = DisposeBag()
+
+    private let minimumLineSpacing: CGFloat = 10
+    private var navTintColorAnimatation: UIViewPropertyAnimator!
+    
     
     init() {
         let layout = StretchyHeaderFlowLayout()
@@ -64,10 +67,19 @@ extension MovieController {
         collectionView.backgroundColor = .systemBackground
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
+        
+        navTintColorAnimatation = UIViewPropertyAnimator(duration: 0.5, curve: .linear, animations: {
+            self.navigationController?.navigationBar.tintColor = .black
+        })
+
+        
+        
     }
     
     private func setupNavigationController() {
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.topItem?.title = ""
     }
 }
 
@@ -149,6 +161,12 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var fractionComplete = max(0, scrollView.contentOffset.y / 100)
+        fractionComplete = min(1, scrollView.contentOffset.y / 100)
+        navTintColorAnimatation.fractionComplete = fractionComplete
     }
     
 }
