@@ -26,7 +26,7 @@ class BaseTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .systemGray3
         tabBar.itemPositioning = .centered
     }
-    
+
     private func setupTabBarItems() {
         //MARK: DiscoverController
         var discoverController = DiscoverController()

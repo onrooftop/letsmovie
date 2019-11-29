@@ -17,6 +17,7 @@ class MovieController: UICollectionViewController, UsableViewModel {
     private let minimumLineSpacing: CGFloat = 10
     private var navTintColorAnimatation: UIViewPropertyAnimator!
     
+    private var isStatusBarHidden = false
     
     init() {
         let layout = StretchyHeaderFlowLayout()
@@ -31,13 +32,24 @@ class MovieController: UICollectionViewController, UsableViewModel {
         super.viewWillAppear(animated)
         
         setupNavigationController()
+        
+
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
         setupCollectionView()
+        
+        isStatusBarHidden = true
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     var viewModel: MovieViewModel!
@@ -59,6 +71,10 @@ class MovieController: UICollectionViewController, UsableViewModel {
             .disposed(by: disposeBag)
         
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden
+    }
 }
 
 //MARK:- UI Elements
@@ -67,19 +83,11 @@ extension MovieController {
         collectionView.backgroundColor = .systemBackground
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.showsVerticalScrollIndicator = false
-        
-        navTintColorAnimatation = UIViewPropertyAnimator(duration: 0.5, curve: .linear, animations: {
-            self.navigationController?.navigationBar.tintColor = .black
-        })
-
-        
-        
     }
     
     private func setupNavigationController() {
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.backgroundColor = .clear
-        navigationController?.navigationBar.topItem?.title = ""
+        navigationItem.setHidesBackButton(true, animated: false)
+        navigationController?.navigationBar.isHidden = true
     }
 }
 
@@ -162,13 +170,6 @@ extension MovieController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return minimumLineSpacing
     }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var fractionComplete = max(0, scrollView.contentOffset.y / 100)
-        fractionComplete = min(1, scrollView.contentOffset.y / 100)
-        navTintColorAnimatation.fractionComplete = fractionComplete
-    }
-    
 }
 
 //MARK:- Size for cell
