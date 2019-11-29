@@ -55,8 +55,13 @@ class BaseTabBarController: UITabBarController {
         let meViewModel = MeViewModel(service: ApiManager.shared, database: UserMovieStorage.shared)
         meController.bind(viewModel: meViewModel)
         
+        //MARK: Credit
+        let creditController = CreditController()
+        creditController.tabBarItem.image = UIImage(named: "settings")
+        creditController.tabBarItem.title = ""
+        
         viewControllers = [
-            discoverNavController, searchNavController, meNavController
+            discoverNavController, searchNavController, meNavController, creditController
         ]
     }
     

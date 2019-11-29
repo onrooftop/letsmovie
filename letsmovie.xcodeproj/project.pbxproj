@@ -56,6 +56,7 @@
 		AE7F01BF23890FCD0030F1F2 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01BE23890FCD0030F1F2 /* MovieViewModel.swift */; };
 		AE7F01C2238914430030F1F2 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01C1238914430030F1F2 /* Movie.swift */; };
 		AE7F01C423894C380030F1F2 /* SectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7F01C323894C380030F1F2 /* SectionViewModel.swift */; };
+		AE8C217E23916CEC004F424E /* CreditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8C217D23916CEC004F424E /* CreditController.swift */; };
 		AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */; };
 		AEBB550D237C11C800E1B957 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */; };
 		AEBB5511237C129200E1B957 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB5510237C129200E1B957 /* DiscoverController.swift */; };
@@ -144,6 +145,7 @@
 		AE7F01BE23890FCD0030F1F2 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		AE7F01C1238914430030F1F2 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		AE7F01C323894C380030F1F2 /* SectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewModel.swift; sourceTree = "<group>"; };
+		AE8C217D23916CEC004F424E /* CreditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditController.swift; sourceTree = "<group>"; };
 		AEBB5509237C106800E1B957 /* ViewModelBindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindableType.swift; sourceTree = "<group>"; };
 		AEBB550C237C11C800E1B957 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		AEBB5510237C129200E1B957 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		AE02AA63237BF8FC00185B47 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AE8C217C23916CDA004F424E /* Credit */,
 				AE1469C8238FDA4300C8C53A /* Search */,
 				AE1469C7238EFB3100C8C53A /* Poster */,
 				AE7F01A82385251D0030F1F2 /* Movie */,
@@ -409,6 +412,14 @@
 				AE5D0005238AB60100B880AF /* MovieCredit.swift */,
 			);
 			path = Movie;
+			sourceTree = "<group>";
+		};
+		AE8C217C23916CDA004F424E /* Credit */ = {
+			isa = PBXGroup;
+			children = (
+				AE8C217D23916CEC004F424E /* CreditController.swift */,
+			);
+			path = Credit;
 			sourceTree = "<group>";
 		};
 		AEBB550B237C119E00E1B957 /* TabBar */ = {
@@ -650,6 +661,7 @@
 				AE5DFFE623894E2000B880AF /* MovieHeaderViewModel.swift in Sources */,
 				AEBB5522237D80CF00E1B957 /* DiscoverCell.swift in Sources */,
 				AEBB550A237C106800E1B957 /* ViewModelBindableType.swift in Sources */,
+				AE8C217E23916CEC004F424E /* CreditController.swift in Sources */,
 				AE1469D1238FF01600C8C53A /* SearchMovieCell.swift in Sources */,
 				AE1469D5238FF5EF00C8C53A /* FooterView.swift in Sources */,
 				AE5D0019238E8BF900B880AF /* MePosterViewModel.swift in Sources */,

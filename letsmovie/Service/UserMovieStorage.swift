@@ -35,7 +35,7 @@ class UserMovieStorage: UserMovieStorageType {
     
     private init() {
         realm = try! Realm()
-        print(".realm Location: [\(Realm.Configuration.defaultConfiguration.fileURL!)]")
+//        print(".realm Location: [\(Realm.Configuration.defaultConfiguration.fileURL!)]")
         
         userMovieList = ReplaySubject<Results<UserMovie>>.create(bufferSize: 1)
         userMovieList.onNext(getUserMovieList())
