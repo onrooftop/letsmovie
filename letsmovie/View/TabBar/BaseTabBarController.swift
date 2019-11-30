@@ -50,7 +50,7 @@ class BaseTabBarController: UITabBarController {
         var meController = MeController()
         meController.tabBarItem.image = UIImage(named: "user")
         meController.tabBarItem.title = ""
-        let meNavController = UINavigationController(rootViewController: meController)
+        let meNavController = BackEnabledNavigationController(rootViewController: meController)
         
         let meViewModel = MeViewModel(service: ApiManager.shared, database: UserMovieStorage.shared)
         meController.bind(viewModel: meViewModel)
